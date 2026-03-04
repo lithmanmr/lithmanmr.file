@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a5276">
+<!-- Ícono para Android / navegadores -->
+<link rel="icon" type="image/jpeg" href="assets/logo_pastilla.png">
+<link rel="apple-touch-icon" href="assets/logo_pastilla.png">
+
+<!-- Manifest para instalar como app -->
+<link rel="manifest" href="assets/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MisPastillas">
+<title>MisPastillas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --primary:#1a5276;--primary-light:#2980b9;--primary-soft:#d6eaf8;
+  --accent:#e74c3c;--accent-soft:#fadbd8;
+  --green:#1e8449;--green-soft:#d5f5e3;
+  --yellow:#d4ac0d;--yellow-soft:#fef9e7;
+  --orange:#ca6f1e;--orange-soft:#fdebd0;
+  --purple:#7d3c98;--purple-soft:#f4ecf7;
+  --teal:#148f77;--teal-soft:#d1f2eb;
+  --bg:#f0f4f8;--card:#fff;--text:#1c2833;--text-soft:#5d6d7e;
+  --border:#d6e4f0;--radius:20px;
+  --shadow:0 4px 20px rgba(26,82,118,.12);
+  --shadow-lg:0 8px 40px rgba(26,82,118,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
+  min-height:100dvh;max-width:430px;margin:0 auto;overflow-x:hidden}
+@media(min-width:430px){body{box-shadow:0 0 60px rgba(0,0,0,.15)}}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,#1a5276 0%,#2980b9 60%,#1abc9c 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  transition:opacity .6s ease,transform .6s ease}
+#splash.hide{opacity:0;transform:scale(1.05);pointer-events:none}
+.splash-icon{font-size:80px;animation:psplash 1.2s ease-in-out infinite alternate}
+@keyframes psplash{from{transform:scale(1)}to{transform:scale(1.1) rotate(-5deg)}}
+.splash-title{font-family:'Fredoka One',cursive;font-size:42px;color:#fff;text-shadow:0 3px 10px rgba(0,0,0,.2)}
+.splash-sub{font-size:16px;color:rgba(255,255,255,.85);font-weight:600}
+.splash-loader{width:200px;height:6px;background:rgba(255,255,255,.3);border-radius:10px;overflow:hidden;margin-top:20px}
+.splash-progress{height:100%;background:#fff;border-radius:10px;animation:loadbar 2s ease forwards}
+@keyframes loadbar{from{width:0}to{width:100%}}
+
+/* SHELL */
+#app{display:none;flex-direction:column;min-height:100dvh}
+#app.show{display:flex}
+
+/* HEADER */
+.app-header{background:linear-gradient(135deg,#1a5276 0%,#2980b9 100%);
+  padding:14px 16px 16px;position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 20px rgba(26,82,118,.25)}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.app-logo{font-family:'Fredoka One',cursive;font-size:23px;color:#fff;display:flex;align-items:center;gap:7px}
+.header-date{font-size:11px;color:rgba(255,255,255,.8);font-weight:600}
+.notif-btn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:38px;height:38px;
+  font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  position:relative;transition:background .2s}
+.notif-btn:active{background:rgba(255,255,255,.35)}
+.notif-badge{position:absolute;top:-2px;right:-2px;background:var(--accent);color:#fff;
+  font-size:9px;font-weight:800;width:17px;height:17px;border-radius:50%;
+  display:none;align-items:center;justify-content:center;border:2px solid #1a5276}
+.profile-switcher{display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.15);border-radius:14px;padding:9px 13px;cursor:pointer}
+.ps-avatar{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.ps-info{flex:1;min-width:0}
+.ps-name{color:#fff;font-weight:900;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ps-role{color:rgba(255,255,255,.75);font-size:10px;font-weight:600}
+.ps-arrow{color:rgba(255,255,255,.7);font-size:17px}
+.today-progress{background:rgba(255,255,255,.15);border-radius:12px;padding:9px 13px;margin-top:9px}
+.progress-label{display:flex;justify-content:space-between;
+  font-size:11px;color:rgba(255,255,255,.9);font-weight:700;margin-bottom:6px}
+.progress-bar{height:7px;background:rgba(255,255,255,.25);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:#1abc9c;border-radius:10px;transition:width .5s ease}
+
+/* NAV */
+.nav-tabs{display:flex;background:var(--card);border-bottom:2px solid var(--border);
+  position:sticky;top:156px;z-index:99;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.nav-tab{flex:1;padding:11px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;
+  background:none;border:none;cursor:pointer;font-family:'Nunito',sans-serif;
+  font-size:9px;font-weight:800;color:var(--text-soft);
+  border-bottom:3px solid transparent;transition:all .2s;letter-spacing:.3px;text-transform:uppercase}
+.nav-tab .ti{font-size:19px}
+.nav-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.nav-tab:active{background:var(--bg)}
+
+/* CONTENT */
+.main-content{flex:1;padding:13px;overflow-y:auto;padding-bottom:80px}
+.page{display:none}
+.page.active{display:block;animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-size:18px;font-weight:900;color:var(--primary);
+  margin-bottom:13px;display:flex;align-items:center;gap:8px}
+.section-title .sta{margin-left:auto;font-size:12px;font-weight:700;color:var(--primary-light);
+  cursor:pointer;background:var(--primary-soft);padding:6px 11px;border-radius:20px}
+
+/* TIME BLOCK */
+.time-block{margin-bottom:16px}
+.time-label{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;
+  color:var(--text-soft);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.time-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* MED CARD */
+.med-card{background:var(--card);border-radius:var(--radius);padding:13px;margin-bottom:9px;
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:11px;
+  border-left:5px solid var(--primary-light);transition:transform .15s;cursor:pointer}
+.med-card:active{transform:scale(.98)}
+.med-card.taken{border-left-color:var(--green);background:#f9fffe}
+.med-card.missed{border-left-color:var(--accent);background:#fff9f9}
+.med-icon-wrap{width:52px;height:52px;border-radius:13px;display:flex;
+  align-items:center;justify-content:center;font-size:25px;flex-shrink:0}
+.c-blue{background:#d6eaf8}.c-red{background:var(--accent-soft)}
+.c-green{background:var(--green-soft)}.c-yellow{background:var(--yellow-soft)}
+.c-orange{background:var(--orange-soft)}.c-purple{background:var(--purple-soft)}.c-teal{background:var(--teal-soft)}
+.med-info{flex:1;min-width:0}
+.med-name{font-size:15px;font-weight:900;color:var(--text)}
+.med-dose{font-size:12px;color:var(--text-soft);font-weight:600;margin-top:2px}
+.med-time-badge{font-size:11px;font-weight:800;background:var(--bg);color:var(--primary);
+  padding:3px 8px;border-radius:20px;display:inline-block;margin-top:5px}
+.status-btn{width:40px;height:40px;border-radius:50%;border:3px solid var(--border);
+  background:var(--bg);font-size:17px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.status-btn.done{background:var(--green);border-color:var(--green)}
+.status-btn.miss{background:var(--accent);border-color:var(--accent)}
+.status-btn:active{transform:scale(.88)}
+
+/* REMINDER BANNER */
+.reminder-banner{background:linear-gradient(135deg,#e74c3c,#c0392b);border-radius:var(--radius);
+  padding:14px;margin-bottom:13px;color:#fff;display:flex;align-items:center;gap:11px;
+  box-shadow:0 6px 25px rgba(231,76,60,.35);animation:pulse-b 2s ease-in-out infinite}
+@keyframes pulse-b{0%,100%{box-shadow:0 6px 25px rgba(231,76,60,.35)}50%{box-shadow:0 6px 35px rgba(231,76,60,.6)}}
+.reminder-icon{font-size:36px;animation:ring 1s ease infinite}
+@keyframes ring{0%,100%{transform:rotate(0)}10%{transform:rotate(15deg)}30%{transform:rotate(-15deg)}50%{transform:rotate(10deg)}70%{transform:rotate(-10deg)}}
+.reminder-text strong{font-size:16px;font-weight:900;display:block}
+.reminder-text span{font-size:12px;opacity:.9}
+.take-now-btn{background:#fff;color:var(--accent);border:none;border-radius:11px;
+  padding:8px 13px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;
+  cursor:pointer;white-space:nowrap;margin-left:auto}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-soft)}
+.empty-state .big-icon{font-size:62px;margin-bottom:13px}
+.empty-state h3{font-size:18px;font-weight:800;color:var(--text)}
+.empty-state p{font-size:13px;margin-top:8px}
+
+/* FAB */
+.fab{position:fixed;bottom:22px;right:22px;width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#e74c3c,#c0392b);border:none;
+  box-shadow:0 6px 25px rgba(231,76,60,.4);font-size:27px;color:#fff;cursor:pointer;
+  display:none;align-items:center;justify-content:center;z-index:200;transition:transform .2s}
+.fab:active{transform:scale(.92)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);
+  display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px)}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:var(--card);border-radius:28px 28px 0 0;padding:20px 17px 34px;
+  width:100%;max-width:430px;max-height:92dvh;overflow-y:auto;
+  animation:slideup .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:40px;height:5px;background:var(--border);border-radius:10px;margin:0 auto 17px}
+.modal-title{font-size:20px;font-weight:900;color:var(--primary);margin-bottom:17px;text-align:center}
+
+/* FORM */
+.form-group{margin-bottom:13px}
+.form-label{display:block;font-size:13px;font-weight:800;color:var(--text);margin-bottom:5px}
+.form-input,.form-select{width:100%;padding:12px 14px;border:2.5px solid var(--border);border-radius:13px;
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;color:var(--text);
+  background:var(--bg);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.form-input:focus,.form-select:focus{border-color:var(--primary-light);background:#fff}
+.color-pick{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.color-dot{width:35px;height:35px;border-radius:50%;cursor:pointer;border:3px solid transparent;
+  transition:transform .2s,border-color .2s;font-size:17px;display:flex;align-items:center;justify-content:center}
+.color-dot.selected{border-color:var(--primary);transform:scale(1.15)}
+.days-pick{display:flex;gap:5px}
+.day-btn{flex:1;padding:9px 1px;border:2.5px solid var(--border);border-radius:10px;
+  background:var(--bg);font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;
+  cursor:pointer;text-align:center;color:var(--text-soft);transition:all .2s}
+.day-btn.selected{background:var(--primary);border-color:var(--primary);color:#fff}
+.times-list{display:flex;flex-direction:column;gap:7px}
+.time-row{display:flex;align-items:center;gap:7px}
+.time-row .form-input{flex:1}
+.rm-time-btn{background:var(--accent-soft);border:none;width:35px;height:35px;
+  border-radius:10px;font-size:16px;cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center}
+.add-time-btn{background:none;border:2px dashed var(--border);border-radius:12px;padding:9px;
+  width:100%;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;
+  color:var(--text-soft);cursor:pointer;transition:border-color .2s,color .2s}
+.add-time-btn:active{border-color:var(--primary);color:var(--primary)}
+.btn-primary{width:100%;padding:14px;background:linear-gradient(135deg,#1a5276,#2980b9);
+  color:#fff;border:none;border-radius:15px;font-family:'Nunito',sans-serif;
+  font-size:15px;font-weight:900;cursor:pointer;margin-top:8px;
+  box-shadow:0 4px 20px rgba(26,82,118,.35);transition:transform .15s}
+.btn-primary:active{transform:scale(.97)}
+.btn-secondary{width:100%;padding:13px;background:var(--primary-soft);color:var(--primary);
+  border:none;border-radius:15px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:6px}
+.btn-danger{width:100%;padding:12px;background:var(--accent-soft);color:var(--accent);
+  border:none;border-radius:15px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:6px}
+.btn-ghost{width:100%;padding:12px;background:#f0f4f8;color:var(--text-soft);
+  border:none;border-radius:15px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:6px}
+
+/* ADMIN MED */
+.admin-med-card{background:var(--card);border-radius:var(--radius);padding:13px;margin-bottom:9px;
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:11px;cursor:pointer;transition:transform .15s}
+.admin-med-card:active{transform:scale(.98)}
+.admin-med-info{flex:1;min-width:0}
+.admin-med-name{font-size:15px;font-weight:900}
+.admin-med-meta{font-size:11px;color:var(--text-soft);font-weight:600;margin-top:2px}
+.times-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.time-chip{background:var(--bg);color:var(--primary);font-size:11px;font-weight:800;
+  padding:3px 9px;border-radius:20px;border:1.5px solid var(--border)}
+.chevron{color:var(--text-soft);font-size:18px}
+
+/* HISTORY */
+.history-day{background:var(--card);border-radius:var(--radius);margin-bottom:13px;overflow:hidden;box-shadow:var(--shadow)}
+.history-day-header{padding:11px 15px;background:var(--primary);color:#fff;
+  font-weight:800;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+.history-item{padding:10px 14px;display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid var(--border);font-size:12px;font-weight:600}
+.history-item:last-child{border-bottom:none}
+.hist-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.hist-taken{background:var(--green)}.hist-missed{background:var(--accent)}
+.hist-info{flex:1}.hist-time{color:var(--text-soft);font-size:11px}
+
+/* PROFILE PAGE */
+.profile-hero{background:linear-gradient(135deg,#1a5276,#2980b9);border-radius:var(--radius);
+  padding:20px;color:#fff;text-align:center;margin-bottom:14px;box-shadow:var(--shadow-lg)}
+.profile-avatar-big{font-size:54px;margin-bottom:9px}
+.profile-hero-name{font-size:22px;font-weight:900;font-family:'Fredoka One',cursive}
+.profile-hero-sub{font-size:12px;opacity:.8;font-weight:600;margin-top:3px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.stat-card{background:var(--card);border-radius:17px;padding:16px 12px;text-align:center;box-shadow:var(--shadow)}
+.stat-number{font-size:30px;font-weight:900;font-family:'Fredoka One',cursive;color:var(--primary)}
+.stat-label{font-size:10px;font-weight:700;color:var(--text-soft);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.setting-row{background:var(--card);border-radius:15px;padding:13px;margin-bottom:8px;
+  display:flex;align-items:center;gap:11px;box-shadow:var(--shadow);cursor:pointer}
+.setting-icon{font-size:22px;flex-shrink:0}
+.setting-text{flex:1}
+.setting-text strong{font-size:13px;font-weight:800;display:block}
+.setting-text span{font-size:11px;color:var(--text-soft);font-weight:600}
+.setting-arrow{color:var(--text-soft);font-size:17px}
+.toggle{width:46px;height:25px;background:var(--border);border-radius:13px;
+  position:relative;cursor:pointer;transition:background .25s;flex-shrink:0}
+.toggle.on{background:var(--green)}
+.toggle::after{content:'';position:absolute;width:19px;height:19px;border-radius:50%;
+  background:#fff;top:3px;left:3px;transition:transform .25s;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.toggle.on::after{transform:translateX(21px)}
+
+/* PROFILE LIST */
+.profile-list-item{display:flex;align-items:center;gap:13px;padding:13px;
+  background:var(--bg);border-radius:15px;margin-bottom:9px;cursor:pointer;
+  border:2.5px solid transparent;transition:all .2s}
+.profile-list-item.active-profile{background:var(--primary-soft);border-color:var(--primary)}
+.pli-avatar{width:46px;height:46px;border-radius:50%;background:var(--primary-soft);
+  display:flex;align-items:center;justify-content:center;font-size:25px;flex-shrink:0}
+.pli-info{flex:1}
+.pli-name{font-size:15px;font-weight:900}
+.pli-meta{font-size:11px;color:var(--text-soft);font-weight:600}
+.pli-check{color:var(--primary);font-size:20px}
+
+/* EXPORT */
+.export-btn{display:flex;align-items:center;justify-content:center;gap:9px;
+  background:linear-gradient(135deg,#1e8449,#27ae60);color:#fff;border:none;
+  border-radius:15px;padding:14px;font-family:'Nunito',sans-serif;font-size:14px;
+  font-weight:800;cursor:pointer;width:100%;margin-bottom:9px;
+  box-shadow:0 4px 16px rgba(30,132,73,.3);transition:transform .15s}
+.export-btn:active{transform:scale(.97)}
+
+/* TOAST */
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);
+  background:var(--primary);color:#fff;padding:12px 18px;border-radius:15px;
+  font-size:13px;font-weight:800;z-index:9999;max-width:90%;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);transition:transform .4s cubic-bezier(.34,1.56,.64,1);text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.tg{background:var(--green)}.toast.tr{background:var(--accent)}
+
+/* ABOUT MODAL */
+.about-hero{background:linear-gradient(135deg,#1a5276,#2980b9);border-radius:20px;
+  padding:24px 16px;text-align:center;margin-bottom:18px;color:#fff}
+.about-app-icon{font-size:56px;margin-bottom:8px;animation:psplash 1.5s ease-in-out infinite alternate}
+.about-app-name{font-family:'Fredoka One',cursive;font-size:30px;letter-spacing:.5px}
+.about-version{font-size:12px;opacity:.75;font-weight:700;margin-top:4px;
+  background:rgba(255,255,255,.15);display:inline-block;padding:3px 12px;
+  border-radius:20px;margin-top:6px}
+.about-tagline{font-size:13px;opacity:.85;font-weight:600;margin-top:8px}
+.about-section-title{font-size:13px;font-weight:900;color:var(--text-soft);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px}
+.about-dev-card{background:var(--primary-soft);border-radius:16px;padding:14px;
+  display:flex;align-items:center;gap:13px;margin-bottom:10px;
+  border:2px solid var(--border)}
+.about-dev-avatar{width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#1a5276,#2980b9);
+  display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.about-dev-info{flex:1}
+.about-dev-name{font-size:16px;font-weight:900;color:var(--primary)}
+.about-dev-role{font-size:12px;color:var(--text-soft);font-weight:600;margin-top:2px}
+.about-contact-row{background:var(--card);border-radius:14px;padding:13px 14px;
+  display:flex;align-items:center;gap:12px;margin-bottom:8px;
+  box-shadow:var(--shadow);cursor:pointer;transition:transform .15s;
+  border:1.5px solid var(--border)}
+.about-contact-row:active{transform:scale(.98)}
+.about-contact-icon{font-size:22px;flex-shrink:0}
+.about-contact-info{flex:1;display:flex;flex-direction:column;gap:1px}
+.about-contact-label{font-size:11px;color:var(--text-soft);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.about-contact-value{font-size:14px;font-weight:800;color:var(--primary)}
+.about-contact-arrow{color:var(--text-soft);font-size:17px}
+.about-features{display:flex;flex-direction:column;gap:0;
+  background:var(--card);border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow);margin-bottom:16px;border:1.5px solid var(--border)}
+.about-feature-item{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;
+  border-bottom:1px solid var(--border)}
+.about-feature-item:last-child{border-bottom:none}
+.about-feature-item>span{font-size:22px;flex-shrink:0;margin-top:1px}
+.about-feature-item>div strong{font-size:13px;font-weight:900;color:var(--text);display:block}
+.about-feature-item>div p{font-size:12px;color:var(--text-soft);font-weight:600;margin-top:2px;line-height:1.4}
+.about-copyright{background:linear-gradient(135deg,#1c2833,#2c3e50);
+  border-radius:16px;padding:16px;display:flex;align-items:center;gap:13px;
+  margin-bottom:14px}
+.about-copyright-icon{font-size:32px;font-weight:900;color:#fff;font-family:'Fredoka One',cursive;
+  width:46px;height:46px;background:rgba(255,255,255,.1);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.about-copyright-text{flex:1}
+.about-copyright-text strong{font-size:13px;font-weight:900;color:#fff;display:block;margin-bottom:4px}
+.about-copyright-text span{font-size:11px;color:rgba(255,255,255,.65);font-weight:600;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="splash-icon">💊</div>
+  <div class="splash-title">MisPastillas</div>
+  <div class="splash-sub">Cuidando tu salud cada día</div>
+  <div class="splash-loader"><div class="splash-progress"></div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div id="app">
+  <header class="app-header">
+    <div class="header-top">
+      <div class="app-logo">💊 MisPastillas</div>
+      <div class="header-date" id="header-date"></div>
+      <button class="notif-btn" id="notif-btn">
+        🔔<span class="notif-badge" id="notif-badge">0</span>
+      </button>
+    </div>
+    <div class="profile-switcher" onclick="openProfileSwitcher()">
+      <div class="ps-avatar" id="ps-avatar">👴</div>
+      <div class="ps-info">
+        <div class="ps-name" id="ps-name">—</div>
+        <div class="ps-role" id="ps-role">—</div>
+      </div>
+      <span class="ps-arrow">⌄</span>
+    </div>
+    <div class="today-progress">
+      <div class="progress-label">
+        <span>Pastillas de hoy</span>
+        <span id="progress-text">0 / 0</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home',this)"><span class="ti">🏠</span>HOY</button>
+    <button class="nav-tab" onclick="showPage('meds',this)"><span class="ti">💊</span>MEDICAMENTOS</button>
+    <button class="nav-tab" onclick="showPage('history',this)"><span class="ti">📋</span>HISTORIAL</button>
+    <button class="nav-tab" onclick="showPage('profile',this)"><span class="ti">👤</span>PERFIL</button>
+  </nav>
+
+  <main class="main-content">
+    <div id="page-home" class="page active">
+      <div id="reminder-area"></div>
+      <div class="section-title">⏰ Agenda de hoy</div>
+      <div id="today-list"></div>
+    </div>
+
+    <div id="page-meds" class="page">
+      <div class="section-title">💊 Medicamentos</div>
+      <div id="meds-list"></div>
+    </div>
+
+    <div id="page-history" class="page">
+      <div class="section-title">📋 Historial
+        <span class="sta" onclick="exportPDF()">📄 Generar PDF</span>
+      </div>
+      <div id="history-list"></div>
+    </div>
+
+    <div id="page-profile" class="page">
+      <div class="profile-hero">
+        <div class="profile-avatar-big" id="ph-avatar">👴</div>
+        <div class="profile-hero-name" id="ph-name">—</div>
+        <div class="profile-hero-sub" id="ph-sub">—</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number" id="s-taken">0</div><div class="stat-label">Tomadas (mes)</div></div>
+        <div class="stat-card"><div class="stat-number" id="s-streak">0</div><div class="stat-label">Dias seguidos</div></div>
+        <div class="stat-card"><div class="stat-number" id="s-total">0</div><div class="stat-label">Medicamentos</div></div>
+        <div class="stat-card"><div class="stat-number" id="s-pct">0%</div><div class="stat-label">Cumplimiento</div></div>
+      </div>
+      <button class="export-btn" onclick="sharePDF()">📲 Compartir PDF</button>
+      <div class="setting-row" onclick="editCurrentProfile()">
+        <span class="setting-icon">✏️</span>
+        <div class="setting-text"><strong>Editar perfil</strong><span>Nombre y datos personales</span></div>
+        <span class="setting-arrow">›</span>
+      </div>
+      <div class="setting-row" onclick="openProfileSwitcher()">
+        <span class="setting-icon">👥</span>
+        <div class="setting-text"><strong>Cambiar paciente</strong><span>Gestionar multiples perfiles</span></div>
+        <span class="setting-arrow">›</span>
+      </div>
+      <div class="setting-row" onclick="toggleNotif()">
+        <span class="setting-icon">🔔</span>
+        <div class="setting-text"><strong>Recordatorios</strong><span>Alertas automaticas</span></div>
+        <div class="toggle on" id="notif-toggle"></div>
+      </div>
+      <div class="setting-row" onclick="toggleSound()">
+        <span class="setting-icon">🔊</span>
+        <div class="setting-text"><strong>Sonido de alarma</strong><span>Tono al recordar</span></div>
+        <div class="toggle on" id="sound-toggle"></div>
+      </div>
+      <div class="setting-row" onclick="openModal('modal-about')">
+        <span class="setting-icon">ℹ️</span>
+        <div class="setting-text"><strong>Acerca de la app</strong><span>Desarrollador, versión y funcionalidades</span></div>
+        <span class="setting-arrow">›</span>
+      </div>
+    </div>
+  </main>
+
+  <button class="fab" id="fab-btn" onclick="openAddMed()">＋</button>
+</div>
+
+<!-- MODAL PROFILE SWITCHER -->
+<div class="modal-overlay" id="modal-profiles">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">👥 Pacientes / Perfiles</div>
+    <div id="profiles-list"></div>
+    <button class="btn-primary" onclick="openAddProfile()">➕ Agregar Paciente</button>
+    <button class="btn-ghost" onclick="closeModal('modal-profiles')">Cerrar</button>
+  </div>
+</div>
+
+<!-- MODAL ADD/EDIT PROFILE -->
+<div class="modal-overlay" id="modal-profile-edit">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="pe-title">➕ Nuevo Paciente</div>
+    <div class="form-group">
+      <label class="form-label">👤 Nombre completo</label>
+      <input class="form-input" id="pe-name" type="text" placeholder="Ej: Abuela Rosa">
+    </div>
+    <div class="form-group">
+      <label class="form-label">🎂 Edad</label>
+      <input class="form-input" id="pe-age" type="number" placeholder="Ej: 75" min="1" max="120">
+    </div>
+    <div class="form-group">
+      <label class="form-label">🩺 Condicion / Diagnostico</label>
+      <input class="form-input" id="pe-condition" type="text" placeholder="Ej: Diabetes, Hipertension...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">🎨 Avatar</label>
+      <div class="color-pick" id="avatar-pick">
+        <div class="color-dot c-blue selected" data-av="👴" onclick="selectAvatar(this)">👴</div>
+        <div class="color-dot c-teal" data-av="👵" onclick="selectAvatar(this)">👵</div>
+        <div class="color-dot c-yellow" data-av="🧓" onclick="selectAvatar(this)">🧓</div>
+        <div class="color-dot c-green" data-av="👨" onclick="selectAvatar(this)">👨</div>
+        <div class="color-dot c-orange" data-av="👩" onclick="selectAvatar(this)">👩</div>
+        <div class="color-dot c-purple" data-av="🧒" onclick="selectAvatar(this)">🧒</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="saveProfile()">💾 Guardar Paciente</button>
+    <button class="btn-danger" id="pe-delete" onclick="deleteProfile()" style="display:none">🗑️ Eliminar Paciente</button>
+    <button class="btn-ghost" onclick="closeModal('modal-profile-edit')">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL ADD/EDIT MED -->
+<div class="modal-overlay" id="modal-med">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-med-title">➕ Nuevo Medicamento</div>
+    <div class="form-group">
+      <label class="form-label">💊 Nombre del medicamento</label>
+      <input class="form-input" id="med-name" type="text" placeholder="Ej: Metformina, Losartan...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">📏 Dosis</label>
+      <input class="form-input" id="med-dose" type="text" placeholder="Ej: 500mg, 1 tableta...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">📝 Instrucciones</label>
+      <input class="form-input" id="med-notes" type="text" placeholder="Ej: Con agua, despues de comer...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">🎨 Color / Icono</label>
+      <div class="color-pick" id="color-pick">
+        <div class="color-dot c-blue selected" data-color="blue" onclick="selectColor(this)">💊</div>
+        <div class="color-dot c-red" data-color="red" onclick="selectColor(this)">❤️</div>
+        <div class="color-dot c-green" data-color="green" onclick="selectColor(this)">🌿</div>
+        <div class="color-dot c-yellow" data-color="yellow" onclick="selectColor(this)">⭐</div>
+        <div class="color-dot c-orange" data-color="orange" onclick="selectColor(this)">🔶</div>
+        <div class="color-dot c-purple" data-color="purple" onclick="selectColor(this)">💜</div>
+        <div class="color-dot c-teal" data-color="teal" onclick="selectColor(this)">💙</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">📅 Dias de la semana</label>
+      <div class="days-pick" id="days-pick">
+        <button class="day-btn selected" data-day="0" onclick="toggleDay(this)">L</button>
+        <button class="day-btn selected" data-day="1" onclick="toggleDay(this)">M</button>
+        <button class="day-btn selected" data-day="2" onclick="toggleDay(this)">X</button>
+        <button class="day-btn selected" data-day="3" onclick="toggleDay(this)">J</button>
+        <button class="day-btn selected" data-day="4" onclick="toggleDay(this)">V</button>
+        <button class="day-btn selected" data-day="5" onclick="toggleDay(this)">S</button>
+        <button class="day-btn selected" data-day="6" onclick="toggleDay(this)">D</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">⏰ Horarios de toma</label>
+      <div class="times-list" id="times-list"></div>
+      <button class="add-time-btn" onclick="addTimeRow()">+ Agregar horario</button>
+    </div>
+    <button class="btn-primary" onclick="saveMed()">💾 Guardar Medicamento</button>
+    <button class="btn-danger" id="del-med-btn" onclick="deleteMed()" style="display:none">🗑️ Eliminar</button>
+    <button class="btn-ghost" onclick="closeModal('modal-med')">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL ABOUT -->
+<div class="modal-overlay" id="modal-about">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+
+    <div class="about-hero">
+      <div class="about-app-icon">💊</div>
+      <div class="about-app-name">MisPastillas</div>
+      <div class="about-version">Versión 1.0.0 · 2026</div>
+      <div class="about-tagline">Cuidando tu salud cada día</div>
+    </div>
+
+    <div class="about-section-title">👨‍💻 Desarrollador</div>
+    <div class="about-dev-card">
+      <div class="about-dev-avatar">👨‍💻</div>
+      <div class="about-dev-info">
+        <div class="about-dev-name">Lithman A. Morales Rivera</div>
+        <div class="about-dev-role">Desarrollador de App</div>
+      </div>
+    </div>
+    <div class="about-contact-row" onclick="window.open('mailto:lithmanmr1011@gmail.com')">
+      <span class="about-contact-icon">📧</span>
+      <div class="about-contact-info">
+        <span class="about-contact-label">Correo electrónico</span>
+        <span class="about-contact-value">lithmanmr1011@gmail.com</span>
+      </div>
+      <span class="about-contact-arrow">›</span>
+    </div>
+    <div class="about-contact-row" onclick="window.open('tel:+51917524248')">
+      <span class="about-contact-icon">📱</span>
+      <div class="about-contact-info">
+        <span class="about-contact-label">Celular / WhatsApp</span>
+        <span class="about-contact-value">917 524 248</span>
+      </div>
+      <span class="about-contact-arrow">›</span>
+    </div>
+
+    <div class="about-section-title" style="margin-top:18px">✨ Funcionalidades</div>
+    <div class="about-features">
+      <div class="about-feature-item"><span>🏠</span><div><strong>Agenda diaria</strong><p>Visualiza y gestiona todas tus tomas del día organizadas por horario.</p></div></div>
+      <div class="about-feature-item"><span>💊</span><div><strong>Gestión de medicamentos</strong><p>Agrega medicamentos con dosis, instrucciones, horarios y días personalizados.</p></div></div>
+      <div class="about-feature-item"><span>⏰</span><div><strong>Alarmas robustas</strong><p>Sistema de recordatorios precisos con sonido y notificaciones del navegador.</p></div></div>
+      <div class="about-feature-item"><span>👥</span><div><strong>Múltiples perfiles</strong><p>Administra varios pacientes desde una sola app, ideal para cuidadores.</p></div></div>
+      <div class="about-feature-item"><span>📋</span><div><strong>Historial completo</strong><p>Registro detallado de cada toma: tomada, omitida, fecha y hora exacta.</p></div></div>
+      <div class="about-feature-item"><span>📄</span><div><strong>Generar PDF</strong><p>Genera reportes médicos profesionales con estadísticas de cumplimiento.</p></div></div>
+      <div class="about-feature-item"><span>📲</span><div><strong>Compartir reporte</strong><p>Comparte el PDF directamente por WhatsApp, correo u otras apps.</p></div></div>
+      <div class="about-feature-item"><span>📊</span><div><strong>Estadísticas</strong><p>Porcentaje de cumplimiento, días seguidos y total de tomas registradas.</p></div></div>
+    </div>
+
+    <div class="about-copyright">
+      <div class="about-copyright-icon">©</div>
+      <div class="about-copyright-text">
+        <strong>© 2026</strong>
+        <span>Todos los derechos reservados.<br>Queda prohibida la reproducción total o parcial<br>de esta aplicación sin autorización expresa del autor.</span>
+      </div>
+    </div>
+
+    <button class="btn-ghost" onclick="closeModal('modal-about')">Cerrar</button>
+  </div>
+</div>
+
+<!-- MODAL DETAIL -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div id="detail-content"></div>
+    <button class="btn-primary" id="dt-take" onclick="takeMedDetail()">✅ Marcar como tomada</button>
+    <button class="btn-danger" id="dt-miss" onclick="missMedDetail()" style="background:var(--accent-soft);color:var(--accent)">❌ Marcar como omitida</button>
+    <button class="btn-ghost" onclick="closeModal('modal-detail')">Cerrar</button>
+  </div>
+</div>
+
+<script>
+// ── CONSTANTS ──
+const ICONS={blue:'💊',red:'❤️',green:'🌿',yellow:'⭐',orange:'🔶',purple:'💜',teal:'💙'};
+const DAY_NAMES=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
+const DAY_SHORT=['Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
+
+function load(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+
+let profiles=load('profiles_v3',[]);
+let currentProfileId=load('currentProfile_v3',null);
+let settings=load('settings_v3',{notif:true,sound:true});
+let _alarmTimers=[];
+
+// ── SEED DEMO DATA ──
+if(!profiles.length){
+  const pid='p1';
+  profiles=[{
+    id:pid,name:'Abuela Rosa',age:74,condition:'Diabetes · Hipertension',avatar:'👵',
+    meds:[
+      {id:'m1',name:'Metformina',dose:'500mg · 1 tableta',notes:'Con el desayuno',color:'blue',days:[0,1,2,3,4,5,6],times:['08:00','20:00']},
+      {id:'m2',name:'Losartan',dose:'50mg · 1 tableta',notes:'Con agua, en ayunas',color:'red',days:[0,1,2,3,4,5,6],times:['07:30']},
+      {id:'m3',name:'Atorvastatina',dose:'20mg · 1 tableta',notes:'Por la noche',color:'purple',days:[0,1,2,3,4,5,6],times:['21:00']},
+      {id:'m4',name:'Vitamina D',dose:'1000 UI · 1 capsula',notes:'Con comida',color:'yellow',days:[0,2,4,6],times:['13:00']},
+    ],log:[]
+  }];
+  currentProfileId=pid;
+  save('profiles_v3',profiles);
+  save('currentProfile_v3',currentProfileId);
+}
+
+function getProfile(id){return profiles.find(p=>p.id===(id||currentProfileId))}
+function curP(){return getProfile(currentProfileId)}
+function saveProfiles(){save('profiles_v3',profiles)}
+
+// ── BOOT ──
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('splash').classList.add('hide');
+    document.getElementById('app').classList.add('show');
+    init();
+    setTimeout(()=>document.getElementById('splash').remove(),700);
+  },2200);
+});
+
+function init(){
+  updateHeaderDate();
+  updateHeaderProfile();
+  renderToday();
+  renderMeds();
+  renderHistory();
+  renderProfilePage();
+  registerAlarms();
+  setInterval(scheduleCheck,30000);
+  setInterval(updateHeaderDate,60000);
+  requestNotifPermission();
+  updateBadge();
+  document.getElementById('notif-btn').onclick=()=>showToast('🔔 '+pendingCount()+' pendientes hoy','');
+}
+
+function updateHeaderDate(){
+  const now=new Date();
+  document.getElementById('header-date').textContent=
+    now.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'});
+}
+function updateHeaderProfile(){
+  const p=curP();if(!p)return;
+  document.getElementById('ps-avatar').textContent=p.avatar||'👴';
+  document.getElementById('ps-name').textContent=p.name;
+  document.getElementById('ps-role').textContent=p.condition||'Paciente';
+}
+
+// ── PAGES ──
+function showPage(page,btn){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('fab-btn').style.display=page==='meds'?'flex':'none';
+  if(page==='home')renderToday();
+  if(page==='history')renderHistory();
+  if(page==='profile')renderProfilePage();
+}
+
+// ── LOG HELPERS ──
+function todayKey(medId,time){
+  const d=new Date();
+  return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate()+'-'+medId+'-'+time;
+}
+function getStatus(key){
+  const p=curP();if(!p)return null;
+  const e=(p.log||[]).find(l=>l.key===key);
+  return e?e.status:null;
+}
+function setStatus(key,status){
+  const p=curP();if(!p)return;
+  if(!p.log)p.log=[];
+  const idx=p.log.findIndex(l=>l.key===key);
+  const entry={key,status,ts:new Date().toISOString()};
+  if(idx>=0)p.log[idx]=entry;else p.log.push(entry);
+  saveProfiles();
+}
+
+// ── TODAY ──
+function renderToday(){
+  const p=curP();if(!p)return;
+  const now=new Date();
+  const todayDay=(now.getDay()+6)%7;
+  const todayMeds=(p.meds||[]).filter(m=>m.days.includes(todayDay));
+
+  // Reminder banner
+  const ra=document.getElementById('reminder-area');
+  ra.innerHTML='';
+  outer:for(const m of todayMeds){
+    for(const t of m.times){
+      const key=todayKey(m.id,t);
+      if(getStatus(key))continue;
+      const[h,min]=t.split(':').map(Number);
+      const diff=(h*60+min)-(now.getHours()*60+now.getMinutes());
+      if(diff>=0&&diff<=15){
+        ra.innerHTML=`<div class="reminder-banner">
+          <span class="reminder-icon">🔔</span>
+          <div class="reminder-text"><strong>${m.name}</strong><span>Hora de tomar tu pastilla! (${t})</span></div>
+          <button class="take-now-btn" onclick="quickTake('${m.id}','${t}')">Tomar!</button>
+        </div>`;
+        break outer;
+      }
+    }
+  }
+
+  if(!todayMeds.length){
+    document.getElementById('today-list').innerHTML=`<div class="empty-state">
+      <div class="big-icon">🎉</div><h3>Sin medicamentos hoy!</h3>
+      <p>No tienes pastillas programadas para hoy.</p></div>`;
+    updateProgress(0,0);return;
+  }
+
+  const slots={};
+  todayMeds.forEach(m=>m.times.forEach(t=>{if(!slots[t])slots[t]=[];slots[t].push(m);}));
+  const sorted=Object.keys(slots).sort();
+  let html='',total=0,taken=0;
+  sorted.forEach(t=>{
+    const[h]=t.split(':').map(Number);
+    const label=h<12?'🌅 Mañana':h<14?'☀️ Mediodia':h<19?'🌤️ Tarde':'🌙 Noche';
+    html+=`<div class="time-block"><div class="time-label">${label} · ${t}</div>`;
+    slots[t].forEach(m=>{
+      const key=todayKey(m.id,t);const st=getStatus(key);
+      total++;if(st==='taken')taken++;
+      html+=medCardHTML(m,t,key,st);
+    });
+    html+='</div>';
+  });
+  document.getElementById('today-list').innerHTML=html;
+  updateProgress(taken,total);
+  updateBadge();
+}
+
+function medCardHTML(m,time,key,status){
+  const cls=status==='taken'?'taken':status==='missed'?'missed':'';
+  const bCls=status==='taken'?'done':status==='missed'?'miss':'';
+  const bIco=status==='taken'?'✅':status==='missed'?'❌':'○';
+  return`<div class="med-card ${cls}" onclick="openDetail('${m.id}','${time}','${key}')">
+    <div class="med-icon-wrap c-${m.color}">${ICONS[m.color]}</div>
+    <div class="med-info">
+      <div class="med-name">${m.name}</div>
+      <div class="med-dose">${m.dose}</div>
+      ${m.notes?`<div class="med-dose" style="color:var(--text-soft)">${m.notes}</div>`:''}
+      <div class="med-time-badge">⏰ ${time}</div>
+    </div>
+    <button class="status-btn ${bCls}"
+      onclick="event.stopPropagation();toggleTake('${m.id}','${time}','${key}')">${bIco}</button>
+  </div>`;
+}
+
+function updateProgress(taken,total){
+  const pct=total?Math.round(taken/total*100):0;
+  document.getElementById('progress-text').textContent=taken+' / '+total;
+  document.getElementById('progress-fill').style.width=pct+'%';
+}
+
+function pendingCount(){
+  const p=curP();if(!p)return 0;
+  const now=new Date();const todayDay=(now.getDay()+6)%7;
+  let n=0;
+  (p.meds||[]).filter(m=>m.days.includes(todayDay)).forEach(m=>{
+    m.times.forEach(t=>{
+      const[h,min]=t.split(':').map(Number);
+      if((h*60+min)<=(now.getHours()*60+now.getMinutes())&&!getStatus(todayKey(m.id,t)))n++;
+    });
+  });
+  return n;
+}
+
+function updateBadge(){
+  const n=pendingCount();
+  const badge=document.getElementById('notif-badge');
+  badge.textContent=n;badge.style.display=n>0?'flex':'none';
+}
+
+function toggleTake(medId,time,key){
+  const cur=getStatus(key);
+  setStatus(key,cur==='taken'?null:'taken');
+  if(cur!=='taken'){playSound();showToast('✅ Pastilla registrada!','tg');}
+  else showToast('↩️ Desmarcada','');
+  renderToday();
+}
+function quickTake(medId,time){
+  setStatus(todayKey(medId,time),'taken');
+  playSound();showToast('✅ Muy bien! Pastilla tomada 🎉','tg');renderToday();
+}
+
+// ── DETAIL ──
+let _dMedId,_dTime,_dKey;
+function openDetail(medId,time,key){
+  _dMedId=medId;_dTime=time;_dKey=key;
+  const p=curP();const m=(p.meds||[]).find(x=>x.id===medId);if(!m)return;
+  const status=getStatus(key);
+  document.getElementById('detail-content').innerHTML=`
+    <div style="text-align:center;margin-bottom:16px">
+      <div style="font-size:64px;margin-bottom:8px">${ICONS[m.color]}</div>
+      <div style="font-size:22px;font-weight:900;color:var(--primary)">${m.name}</div>
+      <div style="font-size:14px;color:var(--text-soft);font-weight:600;margin-top:3px">${m.dose}</div>
+      ${m.notes?`<div style="font-size:13px;color:var(--text-soft);margin-top:8px;background:var(--bg);padding:9px;border-radius:11px">${m.notes}</div>`:''}
+      <div style="margin-top:13px;font-size:28px;font-weight:900;color:var(--primary);font-family:'Fredoka One',cursive">⏰ ${time}</div>
+      ${status?`<div style="margin-top:9px;font-size:14px;font-weight:800;color:${status==='taken'?'var(--green)':'var(--accent)'}">
+        ${status==='taken'?'✅ Ya tomada':'❌ Omitida'}</div>`:''}
+    </div>`;
+  document.getElementById('dt-take').style.display=status==='taken'?'none':'block';
+  document.getElementById('dt-miss').style.display=status==='missed'?'none':'block';
+  openModal('modal-detail');
+}
+function takeMedDetail(){setStatus(_dKey,'taken');playSound();closeModal('modal-detail');showToast('✅ Pastilla registrada!','tg');renderToday();}
+function missMedDetail(){setStatus(_dKey,'missed');closeModal('modal-detail');showToast('⚠️ Registrado como omitida','tr');renderToday();}
+
+// ── MEDS ──
+function renderMeds(){
+  const p=curP();if(!p)return;
+  const c=document.getElementById('meds-list');
+  if(!(p.meds||[]).length){
+    c.innerHTML=`<div class="empty-state"><div class="big-icon">💊</div>
+      <h3>Sin medicamentos</h3><p>Toca <strong>+</strong> para agregar.</p></div>`;
+    return;
+  }
+  c.innerHTML=p.meds.map(m=>`
+    <div class="admin-med-card" onclick="editMed('${m.id}')">
+      <div class="med-icon-wrap c-${m.color}" style="width:49px;height:49px;font-size:23px">${ICONS[m.color]}</div>
+      <div class="admin-med-info">
+        <div class="admin-med-name">${m.name}</div>
+        <div class="admin-med-meta">${m.dose} · ${m.days.length===7?'Todos los dias':m.days.map(d=>DAY_SHORT[d]).join(', ')}</div>
+        <div class="times-chips">${m.times.map(t=>`<span class="time-chip">⏰ ${t}</span>`).join('')}</div>
+      </div>
+      <span class="chevron">›</span>
+    </div>`).join('');
+}
+
+let _editMedId=null,_selColor='blue';
+function openAddMed(){
+  _editMedId=null;
+  document.getElementById('modal-med-title').textContent='➕ Nuevo Medicamento';
+  document.getElementById('med-name').value='';
+  document.getElementById('med-dose').value='';
+  document.getElementById('med-notes').value='';
+  document.getElementById('del-med-btn').style.display='none';
+  _selColor='blue';
+  document.querySelectorAll('#color-pick .color-dot').forEach(d=>d.classList.toggle('selected',d.dataset.color==='blue'));
+  document.querySelectorAll('.day-btn').forEach(d=>d.classList.add('selected'));
+  document.getElementById('times-list').innerHTML='';
+  addTimeRow('08:00');
+  openModal('modal-med');
+}
+function editMed(id){
+  const p=curP();const m=(p.meds||[]).find(x=>x.id===id);if(!m)return;
+  _editMedId=id;
+  document.getElementById('modal-med-title').textContent='✏️ Editar Medicamento';
+  document.getElementById('med-name').value=m.name;
+  document.getElementById('med-dose').value=m.dose;
+  document.getElementById('med-notes').value=m.notes||'';
+  document.getElementById('del-med-btn').style.display='block';
+  _selColor=m.color;
+  document.querySelectorAll('#color-pick .color-dot').forEach(d=>d.classList.toggle('selected',d.dataset.color===m.color));
+  document.querySelectorAll('.day-btn').forEach(d=>d.classList.toggle('selected',m.days.includes(parseInt(d.dataset.day))));
+  document.getElementById('times-list').innerHTML='';
+  m.times.forEach(t=>addTimeRow(t));
+  openModal('modal-med');
+}
+function selectColor(el){document.querySelectorAll('#color-pick .color-dot').forEach(d=>d.classList.remove('selected'));el.classList.add('selected');_selColor=el.dataset.color;}
+function toggleDay(el){el.classList.toggle('selected')}
+function addTimeRow(val=''){
+  const row=document.createElement('div');row.className='time-row';
+  row.innerHTML=`<input type="time" class="form-input" value="${val}">
+    <button class="rm-time-btn" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('times-list').appendChild(row);
+}
+function saveMed(){
+  const name=document.getElementById('med-name').value.trim();
+  const dose=document.getElementById('med-dose').value.trim();
+  if(!name){showToast('⚠️ Escribe el nombre','tr');return;}
+  if(!dose){showToast('⚠️ Escribe la dosis','tr');return;}
+  const days=[...document.querySelectorAll('.day-btn.selected')].map(d=>parseInt(d.dataset.day));
+  if(!days.length){showToast('⚠️ Selecciona al menos un dia','tr');return;}
+  const times=[...document.querySelectorAll('#times-list input')].map(i=>i.value).filter(Boolean);
+  if(!times.length){showToast('⚠️ Agrega al menos un horario','tr');return;}
+  const p=curP();if(!p)return;
+  if(!p.meds)p.meds=[];
+  const med={id:_editMedId||Date.now().toString(),name,dose,
+    notes:document.getElementById('med-notes').value.trim(),color:_selColor,days,times};
+  if(_editMedId){const idx=p.meds.findIndex(m=>m.id===_editMedId);p.meds[idx]=med;}
+  else p.meds.push(med);
+  saveProfiles();closeModal('modal-med');
+  renderMeds();renderToday();renderProfilePage();
+  showToast('✅ Medicamento guardado','tg');
+  registerAlarms();
+}
+function deleteMed(){
+  if(!confirm('Eliminar este medicamento?'))return;
+  const p=curP();p.meds=(p.meds||[]).filter(m=>m.id!==_editMedId);
+  saveProfiles();closeModal('modal-med');
+  renderMeds();renderToday();renderProfilePage();
+  showToast('🗑️ Medicamento eliminado','');
+}
+
+// ── HISTORY ──
+function renderHistory(){
+  const p=curP();if(!p)return;
+  const c=document.getElementById('history-list');
+  const log=(p.log||[]).filter(l=>l.status);
+  if(!log.length){
+    c.innerHTML=`<div class="empty-state"><div class="big-icon">📋</div>
+      <h3>Sin historial aun</h3><p>Aqui veras el registro de tus tomas.</p></div>`;
+    return;
+  }
+  const byDate={};
+  log.forEach(l=>{
+    const d=new Date(l.ts);
+    const dk=d.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    if(!byDate[dk])byDate[dk]=[];
+    const parts=l.key.split('-');const medId=parts[3];const time=parts[4];
+    const med=(p.meds||[]).find(m=>m.id===medId);
+    if(med)byDate[dk].push({med,time,status:l.status,ts:l.ts});
+  });
+  const dates=Object.keys(byDate).slice(-14).reverse();
+  c.innerHTML=dates.map(date=>{
+    const items=byDate[date];
+    const taken=items.filter(i=>i.status==='taken').length;
+    return`<div class="history-day">
+      <div class="history-day-header">
+        <span>${date.charAt(0).toUpperCase()+date.slice(1)}</span>
+        <span>${taken}/${items.length} tomadas</span>
+      </div>
+      ${items.map(i=>`<div class="history-item">
+        <div class="hist-dot ${i.status==='taken'?'hist-taken':'hist-missed'}"></div>
+        <div class="hist-info">
+          <div>${ICONS[i.med.color]} ${i.med.name} · ${i.med.dose}</div>
+          <div class="hist-time">⏰ ${i.time} · ${i.status==='taken'?'✅ Tomada':'❌ Omitida'}</div>
+        </div>
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ── PROFILE PAGE ──
+function renderProfilePage(){
+  const p=curP();if(!p)return;
+  document.getElementById('ph-avatar').textContent=p.avatar||'👴';
+  document.getElementById('ph-name').textContent=p.name;
+  document.getElementById('ph-sub').textContent=(p.age?p.age+' anos · ':'')+(p.condition||'Paciente');
+  const log=(p.log||[]);
+  const taken=log.filter(l=>l.status==='taken').length;
+  const missed=log.filter(l=>l.status==='missed').length;
+  const total2=taken+missed;const pct=total2?Math.round(taken/total2*100):0;
+  document.getElementById('s-taken').textContent=taken;
+  document.getElementById('s-total').textContent=(p.meds||[]).length;
+  document.getElementById('s-pct').textContent=pct+'%';
+  document.getElementById('s-streak').textContent=calcStreak(p);
+  document.getElementById('notif-toggle').classList.toggle('on',settings.notif);
+  document.getElementById('sound-toggle').classList.toggle('on',settings.sound);
+}
+function calcStreak(p){
+  const days=new Set((p.log||[]).filter(l=>l.status==='taken').map(l=>new Date(l.ts).toDateString()));
+  return days.size;
+}
+function toggleNotif(){settings.notif=!settings.notif;save('settings_v3',settings);renderProfilePage();showToast(settings.notif?'🔔 Recordatorios activados':'🔕 Desactivados',settings.notif?'tg':'');}
+function toggleSound(){settings.sound=!settings.sound;save('settings_v3',settings);renderProfilePage();showToast(settings.sound?'🔊 Sonido activado':'🔇 Silenciado','');}
+function editCurrentProfile(){openEditProfile(currentProfileId);}
+
+// ── PROFILE SWITCHER ──
+function openProfileSwitcher(){
+  const c=document.getElementById('profiles-list');
+  c.innerHTML=profiles.map(p=>`
+    <div class="profile-list-item ${p.id===currentProfileId?'active-profile':''}"
+         onclick="switchProfile('${p.id}')">
+      <div class="pli-avatar">${p.avatar||'👴'}</div>
+      <div class="pli-info">
+        <div class="pli-name">${p.name}</div>
+        <div class="pli-meta">${p.age?p.age+' anos · ':''} ${p.condition||'Paciente'} · ${(p.meds||[]).length} medicamentos</div>
+      </div>
+      ${p.id===currentProfileId?'<span class="pli-check">✅</span>':''}
+      <span style="font-size:17px;cursor:pointer;margin-left:4px" onclick="event.stopPropagation();openEditProfile('${p.id}')">✏️</span>
+    </div>`).join('');
+  openModal('modal-profiles');
+}
+function switchProfile(id){
+  currentProfileId=id;save('currentProfile_v3',id);
+  closeModal('modal-profiles');
+  updateHeaderProfile();
+  renderToday();renderMeds();renderHistory();renderProfilePage();
+  showToast('👤 Cambiado a '+getProfile(id).name,'tg');
+  registerAlarms();
+}
+
+let _editPid=null,_selAvatar='👴';
+function openAddProfile(){
+  _editPid=null;_selAvatar='👴';
+  document.getElementById('pe-title').textContent='➕ Nuevo Paciente';
+  document.getElementById('pe-name').value='';
+  document.getElementById('pe-age').value='';
+  document.getElementById('pe-condition').value='';
+  document.getElementById('pe-delete').style.display='none';
+  document.querySelectorAll('#avatar-pick .color-dot').forEach(d=>d.classList.toggle('selected',d.dataset.av==='👴'));
+  closeModal('modal-profiles');openModal('modal-profile-edit');
+}
+function openEditProfile(id){
+  const p=getProfile(id);if(!p)return;
+  _editPid=id;_selAvatar=p.avatar||'👴';
+  document.getElementById('pe-title').textContent='✏️ Editar Paciente';
+  document.getElementById('pe-name').value=p.name;
+  document.getElementById('pe-age').value=p.age||'';
+  document.getElementById('pe-condition').value=p.condition||'';
+  document.getElementById('pe-delete').style.display=profiles.length>1?'block':'none';
+  document.querySelectorAll('#avatar-pick .color-dot').forEach(d=>d.classList.toggle('selected',d.dataset.av===_selAvatar));
+  closeModal('modal-profiles');openModal('modal-profile-edit');
+}
+function selectAvatar(el){document.querySelectorAll('#avatar-pick .color-dot').forEach(d=>d.classList.remove('selected'));el.classList.add('selected');_selAvatar=el.dataset.av;}
+function saveProfile(){
+  const name=document.getElementById('pe-name').value.trim();
+  if(!name){showToast('⚠️ Escribe el nombre','tr');return;}
+  const prof={
+    id:_editPid||Date.now().toString(),
+    name,age:parseInt(document.getElementById('pe-age').value)||null,
+    condition:document.getElementById('pe-condition').value.trim(),
+    avatar:_selAvatar,
+    meds:_editPid?getProfile(_editPid).meds:[],
+    log:_editPid?getProfile(_editPid).log:[]
+  };
+  if(_editPid){const idx=profiles.findIndex(p=>p.id===_editPid);profiles[idx]=prof;}
+  else{profiles.push(prof);currentProfileId=prof.id;save('currentProfile_v3',prof.id);}
+  saveProfiles();closeModal('modal-profile-edit');
+  updateHeaderProfile();
+  renderToday();renderMeds();renderHistory();renderProfilePage();
+  showToast('✅ Paciente guardado','tg');
+}
+function deleteProfile(){
+  if(profiles.length<=1){showToast('⚠️ Debe haber al menos un paciente','tr');return;}
+  if(!confirm('Eliminar este paciente y todos sus datos?'))return;
+  profiles=profiles.filter(p=>p.id!==_editPid);
+  if(currentProfileId===_editPid)currentProfileId=profiles[0].id;
+  save('currentProfile_v3',currentProfileId);saveProfiles();
+  closeModal('modal-profile-edit');
+  updateHeaderProfile();
+  renderToday();renderMeds();renderHistory();renderProfilePage();
+  showToast('🗑️ Paciente eliminado','');
+}
+
+// ── ROBUST ALARMS (setTimeout-based) ──
+function registerAlarms(){
+  _alarmTimers.forEach(t=>clearTimeout(t));_alarmTimers=[];
+  if(!settings.notif)return;
+  const now=new Date();
+  profiles.forEach(p=>{
+    const todayDay=(now.getDay()+6)%7;
+    (p.meds||[]).filter(m=>m.days.includes(todayDay)).forEach(m=>{
+      m.times.forEach(t=>{
+        const[h,min]=t.split(':').map(Number);
+        const alarmTime=new Date(now.getFullYear(),now.getMonth(),now.getDate(),h,min,0,0);
+        const ms=alarmTime-now;
+        if(ms>0&&ms<86400000){
+          const timer=setTimeout(()=>{
+            const pNow=getProfile(p.id);
+            const key=todayKey(m.id,t);
+            const entry=(pNow.log||[]).find(l=>l.key===key);
+            if(!entry||!entry.status){
+              sendNotif('Pastilla: '+p.name,'Hora de tomar '+m.name+' ('+m.dose+') - '+t);
+              if(p.id===currentProfileId){
+                playSound();
+                showToast('🔔 '+p.name+': '+m.name+' — ⏰ '+t,'tg');
+                renderToday();
+              }
+            }
+          },ms);
+          _alarmTimers.push(timer);
+        }
+      });
+    });
+  });
+}
+
+function scheduleCheck(){
+  if(!settings.notif)return;
+  const now=new Date();
+  profiles.forEach(p=>{
+    const todayDay=(now.getDay()+6)%7;
+    (p.meds||[]).filter(m=>m.days.includes(todayDay)).forEach(m=>{
+      m.times.forEach(t=>{
+        const[h,min]=t.split(':').map(Number);
+        const diff=(h*60+min)-(now.getHours()*60+now.getMinutes());
+        if(diff===0){
+          const key=todayKey(m.id,t);
+          const entry=(p.log||[]).find(l=>l.key===key);
+          if(!entry||!entry.status){
+            sendNotif('Pastilla: '+p.name,'Hora de tomar '+m.name+'! '+t);
+            if(p.id===currentProfileId){playSound();renderToday();}
+          }
+        }
+      });
+    });
+  });
+}
+
+// ── PDF EXPORT ──
+function sharePDF(){
+  const p=curP();if(!p)return;
+  showToast('⏳ Generando PDF...','');
+  setTimeout(()=>exportPDF(true),200);
+}
+function exportPDF(share=false){
+  const p=curP();if(!p)return;
+  if(!share)showToast('⏳ Generando PDF...','');
+  setTimeout(()=>{
+    try{
+      const{jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      const W=210;let y=20;
+
+      // Header
+      doc.setFillColor(26,82,118);
+      doc.rect(0,0,W,44,'F');
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(20);doc.setFont('helvetica','bold');
+      doc.text('MisPastillas - Historial Medico',W/2,16,{align:'center'});
+      doc.setFontSize(11);doc.setFont('helvetica','normal');
+      doc.text('Paciente: '+p.name+(p.age?'  |  '+p.age+' anos':''),W/2,26,{align:'center'});
+      const dateStr=new Date().toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+      doc.text('Reporte generado: '+dateStr,W/2,34,{align:'center'});
+      y=54;
+
+      // Patient info
+      doc.setTextColor(26,82,118);doc.setFontSize(13);doc.setFont('helvetica','bold');
+      doc.text('Informacion del Paciente',14,y);y+=7;
+      doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(50,50,50);
+      if(p.condition){doc.text('Diagnostico: '+p.condition,14,y);y+=6;}
+      const log=(p.log||[]).filter(l=>l.status);
+      const taken=log.filter(l=>l.status==='taken').length;
+      const missed=log.filter(l=>l.status==='missed').length;
+      const total2=taken+missed;const pct=total2?Math.round(taken/total2*100):0;
+      doc.text('Total registros: '+total2+'   Tomadas: '+taken+'   Omitidas: '+missed+'   Cumplimiento: '+pct+'%',14,y);y+=12;
+
+      // Medications
+      doc.setTextColor(26,82,118);doc.setFontSize(13);doc.setFont('helvetica','bold');
+      doc.text('Medicamentos Activos',14,y);y+=8;
+      (p.meds||[]).forEach(m=>{
+        if(y>260){doc.addPage();y=20;}
+        doc.setFillColor(240,244,248);
+        doc.roundedRect(12,y-5,W-24,20,3,3,'F');
+        doc.setTextColor(26,82,118);doc.setFontSize(11);doc.setFont('helvetica','bold');
+        doc.text(m.name+' - '+m.dose,16,y+3);
+        doc.setFont('helvetica','normal');doc.setTextColor(80,80,80);doc.setFontSize(9);
+        const days=m.days.length===7?'Todos los dias':m.days.map(d=>DAY_SHORT[d]).join(', ');
+        doc.text('Horarios: '+m.times.join(', ')+'   Dias: '+days+(m.notes?'   '+m.notes:''),16,y+10);
+        y+=24;
+      });
+      y+=4;
+
+      // History table
+      doc.setTextColor(26,82,118);doc.setFontSize(13);doc.setFont('helvetica','bold');
+      doc.text('Historial de Tomas (ultimas 4 semanas)',14,y);y+=8;
+      // Table header
+      doc.setFillColor(26,82,118);doc.rect(12,y-5,W-24,8,'F');
+      doc.setTextColor(255,255,255);doc.setFontSize(9);doc.setFont('helvetica','bold');
+      doc.text('Fecha',16,y);doc.text('Medicamento',56,y);
+      doc.text('Dosis',112,y);doc.text('Hora',148,y);doc.text('Estado',170,y);
+      y+=6;
+
+      const cutoff=new Date();cutoff.setDate(cutoff.getDate()-28);
+      const recentLog=log.filter(l=>new Date(l.ts)>=cutoff)
+        .sort((a,b)=>new Date(b.ts)-new Date(a.ts));
+
+      recentLog.forEach((l,i)=>{
+        if(y>272){doc.addPage();y=20;}
+        const parts=l.key.split('-');const medId=parts[3];const time=parts[4];
+        const med=(p.meds||[]).find(m=>m.id===medId);if(!med)return;
+        const ds=new Date(l.ts).toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'2-digit'});
+        if(i%2===0){doc.setFillColor(248,249,250);doc.rect(12,y-4,W-24,8,'F');}
+        doc.setTextColor(50,50,50);doc.setFontSize(8.5);doc.setFont('helvetica','normal');
+        doc.text(ds,16,y);
+        doc.text(med.name.length>22?med.name.substring(0,22)+'...':med.name,56,y);
+        doc.text(med.dose.length>16?med.dose.substring(0,16)+'...':med.dose,112,y);
+        doc.text(time,148,y);
+        const isTaken=l.status==='taken';
+        doc.setTextColor(isTaken?30:231,isTaken?132:76,isTaken?73:60);
+        doc.setFont('helvetica','bold');
+        doc.text(isTaken?'Tomada':'Omitida',170,y);
+        y+=8;
+      });
+
+      if(!recentLog.length){
+        doc.setTextColor(120,120,120);doc.setFontSize(10);doc.setFont('helvetica','italic');
+        doc.text('Sin registros en los ultimos 28 dias',14,y);
+      }
+
+      // Footer
+      const pages=doc.getNumberOfPages();
+      for(let i=1;i<=pages;i++){
+        doc.setPage(i);
+        doc.setFillColor(26,82,118);doc.rect(0,287,W,10,'F');
+        doc.setTextColor(255,255,255);doc.setFontSize(8);doc.setFont('helvetica','normal');
+        doc.text('MisPastillas - Reporte medico automatico',14,293);
+        doc.text('Pag. '+i+' / '+pages,W-14,293,{align:'right'});
+      }
+
+      const fn='historial_'+p.name.replace(/\s+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.pdf';
+      const pdfBlob=doc.output('blob');
+      const file=new File([pdfBlob],fn,{type:'application/pdf'});
+      if(share&&navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+        navigator.share({
+          title:'Historial de '+p.name,
+          text:'Historial de medicamentos - MisPastillas',
+          files:[file]
+        }).then(()=>showToast('✅ Compartido correctamente','tg'))
+          .catch(()=>{doc.save(fn);showToast('✅ PDF descargado','tg');});
+      }else{
+        doc.save(fn);
+        showToast('✅ PDF descargado correctamente','tg');
+      }
+    }catch(e){console.error(e);showToast('Error al generar PDF','tr');}
+  },200);
+}
+
+// ── MODAL UTILS ──
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);});
+});
+
+// ── TOAST ──
+let _tt;
+function showToast(msg,type){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show'+(type?' '+type:'');
+  clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── NOTIFICATIONS ──
+function requestNotifPermission(){
+  if('Notification'in window&&Notification.permission==='default'){
+    Notification.requestPermission().then(()=>registerAlarms());
+  }
+}
+function sendNotif(title,body){
+  if('Notification'in window&&Notification.permission==='granted'){
+    new Notification(title,{body,icon:''});
+  }
+}
+
+// ── SOUND ──
+function playSound(){
+  if(!settings.sound)return;
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [[523,0],[659,.15],[784,.30],[1047,.48]].forEach(([freq,delay])=>{
+      const osc=ctx.createOscillator();const gain=ctx.createGain();
+      osc.connect(gain);gain.connect(ctx.destination);
+      osc.frequency.value=freq;osc.type='sine';
+      gain.gain.setValueAtTime(.35,ctx.currentTime+delay);
+      gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+delay+.35);
+      osc.start(ctx.currentTime+delay);osc.stop(ctx.currentTime+delay+.4);
+    });
+  }catch(e){}
+}
+
+// ── SERVICE WORKER ──
+if('serviceWorker'in navigator){
+  const sw=`self.addEventListener('install',e=>self.skipWaiting());
+self.addEventListener('activate',e=>clients.claim());
+self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>new Response(''))));});`;
+  const blob=new Blob([sw],{type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+</script>
+</body>
+</html>
