@@ -975,7 +975,7 @@ function renderProfilePage(){
   const p=curP();if(!p)return;
   document.getElementById('ph-avatar').textContent=p.avatar||'👴';
   document.getElementById('ph-name').textContent=p.name;
-  document.getElementById('ph-sub').textContent=(p.age?p.age+' anos · ':'')+(p.condition||'Paciente');
+  document.getElementById('ph-sub').textContent=(p.age?p.age+' años · ':'')+(p.condition||'Paciente');
   const log=(p.log||[]);
   const taken=log.filter(l=>l.status==='taken').length;
   const missed=log.filter(l=>l.status==='missed').length;
@@ -1004,7 +1004,7 @@ function openProfileSwitcher(){
       <div class="pli-avatar">${p.avatar||'👴'}</div>
       <div class="pli-info">
         <div class="pli-name">${p.name}</div>
-        <div class="pli-meta">${p.age?p.age+' anos · ':''} ${p.condition||'Paciente'} · ${(p.meds||[]).length} medicamentos</div>
+        <div class="pli-meta">${p.age?p.age+' años · ':''} ${p.condition||'Paciente'} · ${(p.meds||[]).length} medicamentos</div>
       </div>
       ${p.id===currentProfileId?'<span class="pli-check">✅</span>':''}
       <span style="font-size:17px;cursor:pointer;margin-left:4px" onclick="event.stopPropagation();openEditProfile('${p.id}')">✏️</span>
