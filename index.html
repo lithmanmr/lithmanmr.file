@@ -332,6 +332,188 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
 .about-copyright-text{flex:1}
 .about-copyright-text strong{font-size:13px;font-weight:900;color:#fff;display:block;margin-bottom:4px}
 .about-copyright-text span{font-size:11px;color:rgba(255,255,255,.65);font-weight:600;line-height:1.5}
+
+/* ══════════════════════════════════════
+   SECCIÓN SALUD
+══════════════════════════════════════ */
+.health-hero{background:linear-gradient(135deg,#1e8449,#27ae60);border-radius:var(--radius);
+  padding:18px;color:#fff;text-align:center;margin-bottom:14px;box-shadow:var(--shadow-lg)}
+.health-hero-icon{font-size:48px;margin-bottom:6px}
+.health-hero-title{font-family:'Fredoka One',cursive;font-size:24px}
+.health-hero-sub{font-size:12px;opacity:.85;font-weight:600;margin-top:4px}
+
+.health-cat-scroll{display:flex;gap:9px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;
+  scrollbar-width:none;-ms-overflow-style:none}
+.health-cat-scroll::-webkit-scrollbar{display:none}
+.health-cat-btn{flex-shrink:0;padding:9px 16px;border-radius:30px;border:2.5px solid var(--border);
+  background:var(--card);font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
+  color:var(--text-soft);cursor:pointer;display:flex;align-items:center;gap:6px;
+  white-space:nowrap;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.health-cat-btn.active{background:var(--green);border-color:var(--green);color:#fff;
+  box-shadow:0 4px 14px rgba(30,132,73,.35)}
+.health-cat-btn:active{transform:scale(.95)}
+
+.health-search-wrap{position:relative;margin-bottom:14px}
+.health-search-input{width:100%;padding:12px 14px 12px 42px;border:2.5px solid var(--border);
+  border-radius:15px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+  background:var(--card);color:var(--text);outline:none;transition:border-color .2s}
+.health-search-input:focus{border-color:var(--green)}
+.health-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:17px}
+
+.disease-card{background:var(--card);border-radius:var(--radius);margin-bottom:10px;
+  box-shadow:var(--shadow);overflow:hidden;border-left:5px solid var(--green);
+  cursor:pointer;transition:transform .15s}
+.disease-card:active{transform:scale(.98)}
+.disease-card-header{display:flex;align-items:center;gap:12px;padding:13px 14px}
+.disease-icon-wrap{width:50px;height:50px;border-radius:13px;background:var(--green-soft);
+  display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.disease-info{flex:1;min-width:0}
+.disease-name{font-size:15px;font-weight:900;color:var(--text)}
+.disease-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.disease-tag{font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;
+  background:var(--green-soft);color:var(--green)}
+.disease-tag.warning{background:var(--orange-soft);color:var(--orange)}
+.disease-tag.danger{background:var(--accent-soft);color:var(--accent)}
+.disease-tag.info{background:var(--primary-soft);color:var(--primary)}
+.disease-tag.purple{background:var(--purple-soft);color:var(--purple)}
+.disease-chevron{color:var(--text-soft);font-size:18px;transition:transform .25s}
+.disease-card.open .disease-chevron{transform:rotate(90deg)}
+
+.disease-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border)}
+.disease-card.open .disease-body{display:block;animation:fadein .25s ease}
+.disease-section{margin-top:12px}
+.disease-section-title{font-size:12px;font-weight:900;color:var(--text-soft);
+  text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px;
+  display:flex;align-items:center;gap:5px}
+.disease-desc{font-size:13px;font-weight:600;color:var(--text);line-height:1.6;
+  background:var(--bg);border-radius:11px;padding:10px 12px}
+.rec-list{display:flex;flex-direction:column;gap:7px}
+.rec-item{display:flex;align-items:flex-start;gap:9px;background:var(--green-soft);
+  border-radius:11px;padding:9px 11px}
+.rec-item.warn{background:var(--orange-soft)}
+.rec-item.danger{background:var(--accent-soft)}
+.rec-item.info{background:var(--primary-soft)}
+.rec-icon{font-size:17px;flex-shrink:0;margin-top:1px}
+.rec-text{font-size:12px;font-weight:700;color:var(--text);line-height:1.5}
+.rec-text strong{color:var(--primary);font-size:13px}
+.when-doctor{background:linear-gradient(135deg,#e74c3c,#c0392b);border-radius:13px;
+  padding:11px 13px;margin-top:10px;display:flex;gap:10px;align-items:flex-start}
+.when-doctor-icon{font-size:22px;flex-shrink:0}
+.when-doctor-text{font-size:12px;color:#fff;font-weight:700;line-height:1.5}
+.when-doctor-text strong{font-size:13px;display:block;margin-bottom:3px}
+
+.health-empty{text-align:center;padding:40px 20px;color:var(--text-soft)}
+.health-empty .big-icon{font-size:52px;margin-bottom:10px}
+.health-empty h3{font-size:16px;font-weight:800;color:var(--text)}
+.health-empty p{font-size:12px;margin-top:6px}
+
+/* ══════════════════════════════════════
+   SECCIÓN CITAS MÉDICAS
+══════════════════════════════════════ */
+.appt-hero{background:linear-gradient(135deg,#7d3c98,#9b59b6);border-radius:var(--radius);
+  padding:18px;color:#fff;text-align:center;margin-bottom:14px;box-shadow:var(--shadow-lg)}
+.appt-hero-icon{font-size:48px;margin-bottom:6px}
+.appt-hero-title{font-family:'Fredoka One',cursive;font-size:24px}
+.appt-hero-sub{font-size:12px;opacity:.85;font-weight:600;margin-top:4px}
+.appt-hero-disclaimer{background:rgba(255,255,255,.15);border-radius:12px;
+  padding:10px 13px;margin-top:10px;display:flex;align-items:flex-start;gap:9px}
+.appt-hero-disclaimer span:first-child{font-size:20px;flex-shrink:0}
+.appt-hero-disclaimer span:last-child{font-size:11px;color:rgba(255,255,255,.95);
+  font-weight:700;line-height:1.6;text-align:left}
+
+.appt-filter-scroll{display:flex;gap:9px;overflow-x:auto;padding-bottom:6px;
+  margin-bottom:14px;scrollbar-width:none;-ms-overflow-style:none}
+.appt-filter-scroll::-webkit-scrollbar{display:none}
+.appt-filter-btn{flex-shrink:0;padding:9px 16px;border-radius:30px;
+  border:2.5px solid var(--border);background:var(--card);
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
+  color:var(--text-soft);cursor:pointer;white-space:nowrap;
+  transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.appt-filter-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;
+  box-shadow:0 4px 14px rgba(125,60,152,.35)}
+.appt-filter-btn:active{transform:scale(.95)}
+
+.appt-card{background:var(--card);border-radius:var(--radius);margin-bottom:10px;
+  box-shadow:var(--shadow);overflow:hidden;cursor:pointer;
+  transition:transform .15s;border-left:5px solid var(--purple)}
+.appt-card:active{transform:scale(.98)}
+.appt-card.status-completada{border-left-color:var(--green)}
+.appt-card.status-cancelada{border-left-color:var(--accent)}
+.appt-card.status-pendiente{border-left-color:var(--purple)}
+.appt-card-inner{display:flex;align-items:center;gap:12px;padding:13px 14px}
+.appt-icon-wrap{width:52px;height:52px;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  flex-shrink:0;background:var(--purple-soft)}
+.appt-card.status-completada .appt-icon-wrap{background:var(--green-soft)}
+.appt-card.status-cancelada .appt-icon-wrap{background:var(--accent-soft)}
+.appt-info{flex:1;min-width:0}
+.appt-doctor{font-size:15px;font-weight:900;color:var(--text)}
+.appt-specialty{font-size:12px;color:var(--text-soft);font-weight:600;margin-top:2px}
+.appt-datetime{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+.appt-date-chip{background:var(--purple-soft);color:var(--purple);font-size:11px;
+  font-weight:800;padding:3px 9px;border-radius:20px;border:1.5px solid #e8d5f5}
+.appt-card.status-completada .appt-date-chip{background:var(--green-soft);
+  color:var(--green);border-color:#b7e4c7}
+.appt-card.status-cancelada .appt-date-chip{background:var(--accent-soft);
+  color:var(--accent);border-color:#f5b7b1}
+.appt-status-badge{font-size:10px;font-weight:900;padding:3px 9px;border-radius:20px}
+.badge-pendiente{background:var(--purple-soft);color:var(--purple)}
+.badge-completada{background:var(--green-soft);color:var(--green)}
+.badge-cancelada{background:var(--accent-soft);color:var(--accent)}
+.appt-chevron{color:var(--text-soft);font-size:18px;transition:transform .25s}
+.appt-card.open .appt-chevron{transform:rotate(90deg)}
+
+.appt-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border)}
+.appt-card.open .appt-body{display:block;animation:fadein .25s ease}
+.appt-detail-row{display:flex;align-items:flex-start;gap:10px;
+  padding:9px 11px;border-radius:11px;background:var(--bg);margin-top:8px}
+.appt-detail-icon{font-size:18px;flex-shrink:0}
+.appt-detail-text{flex:1}
+.appt-detail-label{font-size:10px;font-weight:900;color:var(--text-soft);
+  text-transform:uppercase;letter-spacing:.5px}
+.appt-detail-value{font-size:13px;font-weight:700;color:var(--text);margin-top:2px}
+.appt-actions{display:flex;gap:8px;margin-top:11px}
+.appt-action-btn{flex:1;padding:10px;border-radius:12px;border:none;
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
+  cursor:pointer;transition:transform .15s;display:flex;
+  align-items:center;justify-content:center;gap:5px}
+.appt-action-btn:active{transform:scale(.95)}
+.btn-completar{background:var(--green-soft);color:var(--green)}
+.btn-cancelar{background:var(--accent-soft);color:var(--accent)}
+.btn-editar{background:var(--primary-soft);color:var(--primary)}
+
+.appt-upcoming-banner{background:linear-gradient(135deg,#7d3c98,#9b59b6);
+  border-radius:var(--radius);padding:14px;margin-bottom:13px;
+  color:#fff;display:flex;align-items:center;gap:11px;
+  box-shadow:0 6px 25px rgba(125,60,152,.35)}
+.appt-upcoming-icon{font-size:36px;animation:ring 1s ease infinite}
+.appt-upcoming-text strong{font-size:15px;font-weight:900;display:block}
+.appt-upcoming-text span{font-size:12px;opacity:.9}
+
+.appt-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:14px}
+.appt-stat{background:var(--card);border-radius:15px;padding:13px 10px;
+  text-align:center;box-shadow:var(--shadow)}
+.appt-stat-num{font-size:26px;font-weight:900;font-family:'Fredoka One',cursive}
+.appt-stat-num.purple{color:var(--purple)}
+.appt-stat-num.green{color:var(--green)}
+.appt-stat-num.red{color:var(--accent)}
+.appt-stat-label{font-size:10px;font-weight:700;color:var(--text-soft);
+  margin-top:3px;text-transform:uppercase;letter-spacing:.3px}
+
+.appt-empty{text-align:center;padding:40px 20px;color:var(--text-soft)}
+.appt-empty .big-icon{font-size:62px;margin-bottom:13px}
+.appt-empty h3{font-size:18px;font-weight:800;color:var(--text)}
+.appt-empty p{font-size:13px;margin-top:8px}
+
+/* FAB purple para citas */
+.fab-appt{position:fixed;bottom:22px;right:22px;width:58px;height:58px;
+  border-radius:50%;background:linear-gradient(135deg,#7d3c98,#9b59b6);
+  border:none;box-shadow:0 6px 25px rgba(125,60,152,.4);
+  font-size:27px;color:#fff;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  z-index:200;transition:transform .2s}
+.fab-appt:active{transform:scale(.92)}
+
 </style>
 </head>
 <body>
@@ -373,8 +555,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
 
   <nav class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('home',this)"><span class="ti">🏠</span>HOY</button>
-    <button class="nav-tab" onclick="showPage('meds',this)"><span class="ti">💊</span>MEDICAMENTOS</button>
+    <button class="nav-tab" onclick="showPage('meds',this)"><span class="ti">💊</span>PASTILLAS</button>
     <button class="nav-tab" onclick="showPage('history',this)"><span class="ti">📋</span>HISTORIAL</button>
+    <button class="nav-tab" onclick="showPage('health',this)"><span class="ti">🩺</span>SALUD</button>
+    <button class="nav-tab" onclick="showPage('appointments',this)"><span class="ti">📅</span>CITAS</button>
     <button class="nav-tab" onclick="showPage('profile',this)"><span class="ti">👤</span>PERFIL</button>
   </nav>
 
@@ -397,6 +581,92 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
       <div id="history-list"></div>
     </div>
 
+    <!-- PÁGINA CITAS MÉDICAS -->
+    <div id="page-appointments" class="page">
+        <div class="appt-hero">
+            <div class="appt-hero-icon">📅</div>
+            <div class="appt-hero-title">Citas Médicas</div>
+            <div class="appt-hero-sub">Gestiona tus consultas y controles</div>
+            <div class="appt-hero-disclaimer">
+            <span>💡</span>
+            <span>Recuerda confirmar tu cita con el centro médico. Los recordatorios son orientativos.</span>
+            </div>
+        </div>
+
+        <!-- ESTADÍSTICAS -->
+        <div class="appt-stats">
+            <div class="appt-stat">
+            <div class="appt-stat-num purple" id="as-total">0</div>
+            <div class="appt-stat-label">Total</div>
+            </div>
+            <div class="appt-stat">
+            <div class="appt-stat-num green" id="as-completadas">0</div>
+            <div class="appt-stat-label">Completadas</div>
+            </div>
+            <div class="appt-stat">
+            <div class="appt-stat-num red" id="as-pendientes">0</div>
+            <div class="appt-stat-label">Pendientes</div>
+            </div>
+        </div>
+
+        <!-- PRÓXIMA CITA BANNER -->
+        <div id="appt-banner"></div>
+
+        <!-- FILTROS -->
+        <div class="appt-filter-scroll">
+            <button class="appt-filter-btn active" data-filter="todas" onclick="selectApptFilter(this)">📋 Todas</button>
+            <button class="appt-filter-btn" data-filter="pendiente" onclick="selectApptFilter(this)">🟣 Pendientes</button>
+            <button class="appt-filter-btn" data-filter="completada" onclick="selectApptFilter(this)">✅ Completadas</button>
+            <button class="appt-filter-btn" data-filter="cancelada" onclick="selectApptFilter(this)">❌ Canceladas</button>
+            <button class="appt-filter-btn" data-filter="proximas" onclick="selectApptFilter(this)">⏰ Próximas 7 días</button>
+        </div>
+
+        <div id="appt-list"></div>
+        </div>
+
+        <button class="fab-appt" id="fab-appt" onclick="openAddAppt()">＋</button>
+    
+    <!-- PÁGINA SALUD -->
+    <div id="page-health" class="page">
+        <div class="health-hero">
+            <div class="health-hero-icon">🏥</div>
+            <div class="health-hero-title">Guía de Salud</div>
+            <div class="health-hero-sub">Enfermedades, síntomas y recomendaciones</div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:12px;padding:10px 13px;margin-top:10px;display:flex;align-items:flex-start;gap:9px;">
+            <span style="font-size:20px;flex-shrink:0">⚠️</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.95);font-weight:700;line-height:1.6;text-align:left;">
+                La información presentada es <strong style="color:#fff">referencial</strong>. 
+                No reemplaza la consulta médica.
+            </span>
+            </div>
+        </div>
+
+        <!-- BUSCADOR -->
+        <div class="health-search-wrap">
+            <span class="health-search-icon">🔍</span>
+            <input class="health-search-input" id="health-search"
+            type="text" placeholder="Buscar enfermedad o síntoma..."
+            oninput="filterDiseases()">
+        </div>
+
+        <!-- CATEGORÍAS -->
+        <div class="health-cat-scroll" id="health-cats">
+            <button class="health-cat-btn active" data-cat="all" onclick="selectHealthCat(this)">🌐 Todas</button>
+            <button class="health-cat-btn" data-cat="comunes" onclick="selectHealthCat(this)">🤒 Comunes</button>
+            <button class="health-cat-btn" data-cat="ninos" onclick="selectHealthCat(this)">👶 Niños</button>
+            <button class="health-cat-btn" data-cat="adultos" onclick="selectHealthCat(this)">🧑 Adultos</button>
+            <button class="health-cat-btn" data-cat="mayores" onclick="selectHealthCat(this)">👴 Adultos Mayores</button>
+            <button class="health-cat-btn" data-cat="embarazadas" onclick="selectHealthCat(this)">🤰 Embarazadas</button>
+            <button class="health-cat-btn" data-cat="cronicas" onclick="selectHealthCat(this)">🔴 Crónicas</button>
+            <button class="health-cat-btn" data-cat="mentales" onclick="selectHealthCat(this)">🧠 Salud Mental</button>
+            <button class="health-cat-btn" data-cat="digestivas" onclick="selectHealthCat(this)">💩 Digestivas</button>
+            <button class="health-cat-btn" data-cat="respiratorias" onclick="selectHealthCat(this)">💨 Respiratorias</button>
+            <button class="health-cat-btn" data-cat="piel" onclick="selectHealthCat(this)">🩹 Piel</button>
+        </div>
+
+        <div id="health-list"></div>
+        </div>
+
     <div id="page-profile" class="page">
       <div class="profile-hero">
         <div class="profile-avatar-big" id="ph-avatar">👴</div>
@@ -405,7 +675,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
       </div>
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-number" id="s-taken">0</div><div class="stat-label">Tomadas (mes)</div></div>
-        <div class="stat-card"><div class="stat-number" id="s-streak">0</div><div class="stat-label">Dias seguidos</div></div>
+        <div class="stat-card"><div class="stat-number" id="s-streak">0</div><div class="stat-label">Días seguidos</div></div>
         <div class="stat-card"><div class="stat-number" id="s-total">0</div><div class="stat-label">Medicamentos</div></div>
         <div class="stat-card"><div class="stat-number" id="s-pct">0%</div><div class="stat-label">Cumplimiento</div></div>
       </div>
@@ -417,7 +687,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
       </div>
       <div class="setting-row" onclick="openProfileSwitcher()">
         <span class="setting-icon">👥</span>
-        <div class="setting-text"><strong>Cambiar paciente</strong><span>Gestionar multiples perfiles</span></div>
+        <div class="setting-text"><strong>Cambiar paciente</strong><span>Gestionar múltiples perfiles</span></div>
         <span class="setting-arrow">›</span>
       </div>
       <div class="setting-row" onclick="toggleNotif()">
@@ -466,7 +736,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
       <input class="form-input" id="pe-age" type="number" placeholder="Ej: 75" min="1" max="120">
     </div>
     <div class="form-group">
-      <label class="form-label">🩺 Condicion / Diagnostico</label>
+      <label class="form-label">🩺 Condición / Diagnóstico</label>
       <input class="form-input" id="pe-condition" type="text" placeholder="Ej: Diabetes, Hipertension...">
     </div>
     <div class="form-group">
@@ -504,7 +774,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
       <input class="form-input" id="med-notes" type="text" placeholder="Ej: Con agua, despues de comer...">
     </div>
     <div class="form-group">
-      <label class="form-label">🎨 Color / Icono</label>
+      <label class="form-label">🎨 Color / Ícono</label>
       <div class="color-pick" id="color-pick">
         <div class="color-dot c-blue selected" data-color="blue" onclick="selectColor(this)">💊</div>
         <div class="color-dot c-red" data-color="red" onclick="selectColor(this)">❤️</div>
@@ -516,7 +786,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">📅 Dias de la semana</label>
+      <label class="form-label">📅 Días de la semana</label>
       <div class="days-pick" id="days-pick">
         <button class="day-btn selected" data-day="0" onclick="toggleDay(this)">L</button>
         <button class="day-btn selected" data-day="1" onclick="toggleDay(this)">M</button>
@@ -535,6 +805,101 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);
     <button class="btn-primary" onclick="saveMed()">💾 Guardar Medicamento</button>
     <button class="btn-danger" id="del-med-btn" onclick="deleteMed()" style="display:none">🗑️ Eliminar</button>
     <button class="btn-ghost" onclick="closeModal('modal-med')">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL ADD/EDIT CITA -->
+<div class="modal-overlay" id="modal-appt">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-appt-title">📅 Nueva Cita</div>
+
+    <div class="form-group">
+      <label class="form-label">👨‍⚕️ Doctor / Especialista</label>
+      <input class="form-input" id="appt-doctor" type="text"
+        placeholder="Ej: Dr. García, Dra. López...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">🏥 Especialidad</label>
+      <select class="form-select" id="appt-specialty">
+        <option value="">Seleccionar especialidad...</option>
+        <option>❤️ Cardiología</option>
+        <option>🧠 Neurología</option>
+        <option>🦴 Traumatología</option>
+        <option>👁️ Oftalmología</option>
+        <option>👂 Otorrinolaringología</option>
+        <option>💨 Neumología</option>
+        <option>🩸 Endocrinología</option>
+        <option>🤢 Gastroenterología</option>
+        <option>🧬 Oncología</option>
+        <option>🧒 Pediatría</option>
+        <option>👩 Ginecología</option>
+        <option>🦷 Odontología</option>
+        <option>🧴 Dermatología</option>
+        <option>🦵 Reumatología</option>
+        <option>🧘 Psiquiatría / Psicología</option>
+        <option>🩺 Medicina General</option>
+        <option>🔬 Laboratorio / Análisis</option>
+        <option>☢️ Radiología / Imágenes</option>
+        <option>💊 Farmacología</option>
+        <option>🏃 Fisioterapia</option>
+        <option>👓 Optometría</option>
+        <option>🌿 Nutrición</option>
+        <option>Otra especialidad</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">🏥 Centro médico / Clínica</label>
+      <input class="form-input" id="appt-place" type="text"
+        placeholder="Ej: Hospital Nacional, Clínica San Pablo...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">📅 Fecha de la cita</label>
+      <input class="form-input" id="appt-date" type="date">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">⏰ Hora de la cita</label>
+      <input class="form-input" id="appt-time" type="time">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">💰 Costo estimado (opcional)</label>
+      <input class="form-input" id="appt-cost" type="text"
+        placeholder="Ej: S/ 80, Gratis, Por confirmar...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">📝 Motivo / Notas</label>
+      <input class="form-input" id="appt-notes" type="text"
+        placeholder="Ej: Control mensual, dolor de rodilla...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">📞 Teléfono del consultorio (opcional)</label>
+      <input class="form-input" id="appt-phone" type="tel"
+        placeholder="Ej: 01-234-5678">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">🎨 Color / Ícono</label>
+      <div class="color-pick" id="appt-color-pick">
+        <div class="color-dot c-purple selected" data-color="purple" onclick="selectApptColor(this)">💜</div>
+        <div class="color-dot c-blue" data-color="blue" onclick="selectApptColor(this)">💙</div>
+        <div class="color-dot c-green" data-color="green" onclick="selectApptColor(this)">💚</div>
+        <div class="color-dot c-red" data-color="red" onclick="selectApptColor(this)">❤️</div>
+        <div class="color-dot c-orange" data-color="orange" onclick="selectApptColor(this)">🧡</div>
+        <div class="color-dot c-teal" data-color="teal" onclick="selectApptColor(this)">🩵</div>
+        <div class="color-dot c-yellow" data-color="yellow" onclick="selectApptColor(this)">💛</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="saveAppt()">💾 Guardar Cita</button>
+    <button class="btn-danger" id="del-appt-btn" onclick="deleteAppt()" style="display:none">🗑️ Eliminar Cita</button>
+    <button class="btn-ghost" onclick="closeModal('modal-appt')">Cancelar</button>
   </div>
 </div>
 
@@ -668,6 +1033,7 @@ function init(){
   requestNotifPermission();
   updateBadge();
   document.getElementById('notif-btn').onclick=()=>showToast('🔔 '+pendingCount()+' pendientes hoy','');
+  registerApptAlarms();
 }
 
 function updateHeaderDate(){
@@ -689,8 +1055,11 @@ function showPage(page,btn){
   document.getElementById('page-'+page).classList.add('active');
   btn.classList.add('active');
   document.getElementById('fab-btn').style.display=page==='meds'?'flex':'none';
+  document.getElementById('fab-appt').style.display=page==='appointments'?'flex':'none';
   if(page==='home')renderToday();
   if(page==='history')renderHistory();
+  if(page==='health')renderHealthList();
+  if(page==='appointments'){renderAppointments();document.getElementById('fab-appt').style.display='flex';}
   if(page==='profile')renderProfilePage();
 }
 
@@ -753,7 +1122,7 @@ function renderToday(){
   let html='',total=0,taken=0;
   sorted.forEach(t=>{
     const[h]=t.split(':').map(Number);
-    const label=h<12?'🌅 Mañana':h<14?'☀️ Mediodia':h<19?'🌤️ Tarde':'🌙 Noche';
+    const label=h<12?'🌅 Mañana':h<14?'☀️ Mediodía':h<19?'🌤️ Tarde':'🌙 Noche';
     html+=`<div class="time-block"><div class="time-label">${label} · ${t}</div>`;
     slots[t].forEach(m=>{
       const key=todayKey(m.id,t);const st=getStatus(key);
@@ -909,7 +1278,7 @@ function saveMed(){
   if(!name){showToast('⚠️ Escribe el nombre','tr');return;}
   if(!dose){showToast('⚠️ Escribe la dosis','tr');return;}
   const days=[...document.querySelectorAll('.day-btn.selected')].map(d=>parseInt(d.dataset.day));
-  if(!days.length){showToast('⚠️ Selecciona al menos un dia','tr');return;}
+  if(!days.length){showToast('⚠️ Selecciona al menos un día','tr');return;}
   const times=[...document.querySelectorAll('#times-list input')].map(i=>i.value).filter(Boolean);
   if(!times.length){showToast('⚠️ Agrega al menos un horario','tr');return;}
   const p=curP();if(!p)return;
@@ -1011,13 +1380,15 @@ function openProfileSwitcher(){
     </div>`).join('');
   openModal('modal-profiles');
 }
-function switchProfile(id){
+function switchProfile(id) {
   currentProfileId=id;save('currentProfile_v3',id);
   closeModal('modal-profiles');
   updateHeaderProfile();
   renderToday();renderMeds();renderHistory();renderProfilePage();
+  renderAppointments();
   showToast('👤 Cambiado a '+getProfile(id).name,'tg');
   registerAlarms();
+  registerApptAlarms();
 }
 
 let _editPid=null,_selAvatar='👴';
@@ -1176,8 +1547,8 @@ function exportPDF(share=false){
         doc.setTextColor(26,82,118);doc.setFontSize(11);doc.setFont('helvetica','bold');
         doc.text(m.name+' - '+m.dose,16,y+3);
         doc.setFont('helvetica','normal');doc.setTextColor(80,80,80);doc.setFontSize(9);
-        const days=m.days.length===7?'Todos los dias':m.days.map(d=>DAY_SHORT[d]).join(', ');
-        doc.text('Horarios: '+m.times.join(', ')+'   Dias: '+days+(m.notes?'   '+m.notes:''),16,y+10);
+        const days=m.days.length===7?'Todos los días':m.days.map(d=>DAY_SHORT[d]).join(', ');
+        doc.text('Horarios: '+m.times.join(', ')+'   Días: '+days+(m.notes?'   '+m.notes:''),16,y+10);
         y+=24;
       });
       y+=4;
@@ -1216,7 +1587,7 @@ function exportPDF(share=false){
 
       if(!recentLog.length){
         doc.setTextColor(120,120,120);doc.setFontSize(10);doc.setFont('helvetica','italic');
-        doc.text('Sin registros en los ultimos 28 dias',14,y);
+        doc.text('Sin registros en los últimos 28 días',14,y);
       }
 
       // Footer
@@ -1226,7 +1597,7 @@ function exportPDF(share=false){
         doc.setFillColor(26,82,118);doc.rect(0,287,W,10,'F');
         doc.setTextColor(255,255,255);doc.setFontSize(8);doc.setFont('helvetica','normal');
         doc.text('MisPastillas - Reporte médico automático',14,293);
-        doc.text('Pag. '+i+' / '+pages,W-14,293,{align:'right'});
+        doc.text('Pág. '+i+' / '+pages,W-14,293,{align:'right'});
       }
 
       const fn='historial_'+p.name.replace(/\s+/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.pdf';
@@ -1297,6 +1668,851 @@ self.addEventListener('activate',e=>clients.claim());
 self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>new Response(''))));});`;
   const blob=new Blob([sw],{type:'application/javascript'});
   navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+
+// ══════════════════════════════════════
+// SECCIÓN SALUD — BASE DE DATOS
+// ══════════════════════════════════════
+const DISEASES = [
+  // ─── COMUNES ───
+  {id:'d1',icon:'🤒',name:'Fiebre',cats:['comunes','ninos','adultos','mayores'],
+   tags:[{t:'Muy común',c:''},{t:'Síntoma',c:'info'}],
+   desc:'Elevación de la temperatura corporal por encima de 38°C. Generalmente es una respuesta del sistema inmune ante una infección viral o bacteriana.',
+   recs:[
+     {i:'💧',t:'<strong>Hidratación constante:</strong> Beber agua, suero oral o jugos naturales cada 30 minutos.',c:''},
+     {i:'🌡️',t:'<strong>Controlar temperatura:</strong> Tomar paracetamol o ibuprofeno según peso y edad (consultar dosis).',c:''},
+     {i:'🛏️',t:'<strong>Reposo absoluto:</strong> Evitar actividad física mientras dure la fiebre.',c:''},
+     {i:'🧊',t:'<strong>Paños frescos:</strong> Aplicar paños húmedos tibios en frente, nuca y axilas.',c:'info'},
+     {i:'👕',t:'<strong>Ropa ligera:</strong> No abrigar en exceso, permite que el cuerpo regule su temperatura.',c:''},
+     {i:'🍲',t:'<strong>Alimentación liviana:</strong> Sopas, frutas y verduras blandas. Evitar comidas pesadas.',c:''},
+   ],
+   doctor:'Fiebre mayor a 39.5°C que no cede con medicamentos, fiebre en menores de 3 meses, o que dura más de 3 días.'},
+
+  {id:'d2',icon:'🤕',name:'Dolor de cabeza (Cefalea)',cats:['comunes','adultos','mayores','ninos'],
+   tags:[{t:'Muy común',c:''},{t:'Tensional / Migraña',c:'info'}],
+   desc:'Dolor en cualquier parte de la cabeza. Puede ser tensional (el más frecuente), migraña, en racimos o secundario a otra enfermedad.',
+   recs:[
+     {i:'💊',t:'<strong>Analgésicos:</strong> Paracetamol o ibuprofeno para dolor moderado.',c:''},
+     {i:'🌑',t:'<strong>Ambiente oscuro y tranquilo:</strong> Reducir luz y ruido durante el episodio.',c:''},
+     {i:'💧',t:'<strong>Hidratación:</strong> La deshidratación es causa frecuente de cefalea.',c:''},
+     {i:'😴',t:'<strong>Descanso:</strong> Recostarse con los ojos cerrados en posición cómoda.',c:''},
+     {i:'🧴',t:'<strong>Masaje suave:</strong> En sienes, cuello y base del cráneo con movimientos circulares.',c:'info'},
+     {i:'☕',t:'<strong>Evitar cafeína excesiva:</strong> El abuso o la abstinencia de cafeína puede desencadenar cefalea.',c:'warn'},
+   ],
+   doctor:'Dolor súbito muy intenso ("el peor de mi vida"), dolor con fiebre y rigidez de cuello, o cambios en visión y habla.'},
+
+  {id:'d3',icon:'🌩️',name:'Migraña',cats:['comunes','adultos'],
+   tags:[{t:'Crónica posible',c:'warning'},{t:'Incapacitante',c:'danger'}],
+   desc:'Cefalea intensa, generalmente unilateral, pulsátil, que puede acompañarse de náuseas, vómitos y sensibilidad a la luz y el sonido. Puede durar de 4 a 72 horas.',
+   recs:[
+     {i:'💊',t:'<strong>Triptanes o analgésicos específicos:</strong> Consulta con tu médico para medicación preventiva y de ataque.',c:''},
+     {i:'🌑',t:'<strong>Aislamiento sensorial:</strong> Habitación oscura, silenciosa y fresca.',c:''},
+     {i:'📓',t:'<strong>Diario de migraña:</strong> Registra alimentos, horas de sueño y factores desencadenantes.',c:'info'},
+     {i:'😴',t:'<strong>Sueño regular:</strong> Mantener horarios fijos de sueño, evitar el exceso o la falta.',c:''},
+     {i:'🚫',t:'<strong>Evitar desencadenantes:</strong> Queso añejo, vino tinto, ayuno prolongado, estrés intenso.',c:'warn'},
+     {i:'🧘',t:'<strong>Técnicas de relajación:</strong> Mindfulness, yoga suave y respiración profunda como prevención.',c:''},
+   ],
+   doctor:'Más de 4 episodios al mes, migraña con aura diferente a lo habitual, o no responde a tratamiento habitual.'},
+
+  {id:'d4',icon:'🤧',name:'Resfriado común (Catarro)',cats:['comunes','ninos','adultos','mayores'],
+   tags:[{t:'Viral',c:'info'},{t:'Muy contagioso',c:'warning'}],
+   desc:'Infección viral de las vías respiratorias altas causada principalmente por rinovirus. Produce congestión nasal, estornudos, dolor de garganta y malestar general.',
+   recs:[
+     {i:'💧',t:'<strong>Mucho líquido:</strong> Agua caliente, caldos, infusiones de jengibre con miel y limón.',c:''},
+     {i:'🛏️',t:'<strong>Reposo:</strong> Reducir actividad física para apoyar al sistema inmune.',c:''},
+     {i:'💊',t:'<strong>Sintomáticos:</strong> Paracetamol para fiebre/malestar. Descongestionantes solo si son necesarios.',c:''},
+     {i:'🧂',t:'<strong>Lavados nasales:</strong> Solución salina fisiológica para despejar fosas nasales.',c:'info'},
+     {i:'🍯',t:'<strong>Miel natural:</strong> Cucharada de miel para calmar el dolor de garganta (no dar a menores de 1 año).',c:''},
+     {i:'🦠',t:'<strong>Evitar contagio:</strong> Usar mascarilla, lavado frecuente de manos y no compartir utensilios.',c:'warn'},
+   ],
+   doctor:'Fiebre mayor a 39°C por más de 3 días, dificultad para respirar, o síntomas que empeoran después del día 7.'},
+
+  {id:'d5',icon:'🤧',name:'Gripe (Influenza)',cats:['comunes','ninos','adultos','mayores'],
+   tags:[{t:'Viral',c:'info'},{t:'Estacional',c:'warning'}],
+   desc:'Infección viral respiratoria más severa que el resfriado. Aparición brusca con fiebre alta, dolor muscular intenso, fatiga, tos seca y dolor de cabeza.',
+   recs:[
+     {i:'🛏️',t:'<strong>Reposo absoluto:</strong> Mínimo 5-7 días hasta mejoría completa.',c:''},
+     {i:'💊',t:'<strong>Antivirales:</strong> Oseltamivir (Tamiflu) puede acortar la duración si se toma en las primeras 48h.',c:''},
+     {i:'💧',t:'<strong>Hidratación intensa:</strong> Mínimo 2-3 litros de líquidos al día.',c:''},
+     {i:'💉',t:'<strong>Vacunación anual:</strong> La mejor prevención, especialmente en grupos de riesgo.',c:'info'},
+     {i:'🚫',t:'<strong>No dar aspirina a niños:</strong> Riesgo de síndrome de Reye en menores de 16 años.',c:'danger'},
+     {i:'😷',t:'<strong>Aislamiento:</strong> Evitar contacto con personas vulnerables durante los primeros 5 días.',c:'warn'},
+   ],
+   doctor:'Dificultad respiratoria, cianosis (labios azulados), confusión mental, o empeoramiento súbito tras mejoría inicial.'},
+
+  // ─── CRÓNICAS ───
+  {id:'d6',icon:'🩸',name:'Diabetes Mellitus',cats:['cronicas','adultos','mayores'],
+   tags:[{t:'Crónica',c:'danger'},{t:'Tipo 1 y 2',c:'warning'},{t:'Controlable',c:''}],
+   desc:'Enfermedad metabólica caracterizada por niveles elevados de glucosa en sangre. Tipo 1: deficiencia absoluta de insulina. Tipo 2: resistencia a la insulina (más común).',
+   recs:[
+     {i:'🩸',t:'<strong>Control glucémico:</strong> Medir glucosa en ayunas regularmente. Meta: 70-130 mg/dL en ayunas.',c:''},
+     {i:'🥦',t:'<strong>Dieta baja en azúcares:</strong> Eliminar azúcares refinados, harinas blancas, bebidas azucaradas.',c:''},
+     {i:'🏃',t:'<strong>Ejercicio regular:</strong> 30 minutos diarios de caminata o actividad aeróbica moderada.',c:''},
+     {i:'💊',t:'<strong>Medicación puntual:</strong> Tomar metformina, insulina u otros medicamentos sin omitir dosis.',c:''},
+     {i:'👣',t:'<strong>Cuidado de pies:</strong> Revisar diariamente, usar calzado adecuado, evitar heridas.',c:'warn'},
+     {i:'👁️',t:'<strong>Controles médicos:</strong> Revisión ocular, renal y cardiovascular anual.',c:'info'},
+     {i:'🚫',t:'<strong>Evitar alcohol y tabaco:</strong> Agravan la resistencia a insulina y daño vascular.',c:'danger'},
+   ],
+   doctor:'Glucosa >300 mg/dL, síntomas de hipoglucemia (temblores, sudoración fría), heridas que no cicatrizan, o visión borrosa súbita.'},
+
+  {id:'d7',icon:'❤️',name:'Hipertensión Arterial',cats:['cronicas','adultos','mayores'],
+   tags:[{t:'Silenciosa',c:'danger'},{t:'Crónica',c:'danger'},{t:'Controlable',c:''}],
+   desc:'Presión arterial persistentemente elevada (≥140/90 mmHg). Se llama "el asesino silencioso" porque generalmente no produce síntomas hasta que hay daño orgánico.',
+   recs:[
+     {i:'🧂',t:'<strong>Reducir sal:</strong> Menos de 5g de sodio al día. Evitar alimentos procesados y enlatados.',c:''},
+     {i:'🏃',t:'<strong>Ejercicio aeróbico:</strong> Caminata, natación o ciclismo 30 min al día, 5 días por semana.',c:''},
+     {i:'⚖️',t:'<strong>Peso saludable:</strong> Bajar de peso si hay sobrepeso reduce significativamente la presión.',c:''},
+     {i:'💊',t:'<strong>Medicación continua:</strong> Nunca suspender antihipertensivos aunque te sientas bien.',c:''},
+     {i:'🚭',t:'<strong>No fumar:</strong> La nicotina eleva la presión y daña las arterias directamente.',c:'danger'},
+     {i:'🍷',t:'<strong>Limitar alcohol:</strong> Máximo 1 copa diaria en mujeres, 2 en hombres.',c:'warn'},
+     {i:'🧘',t:'<strong>Manejo del estrés:</strong> Meditación, respiración profunda y sueño adecuado.',c:'info'},
+   ],
+   doctor:'Presión mayor a 180/120 mmHg, dolor de cabeza intenso con visión borrosa, dolor en el pecho, o dificultad para hablar.'},
+
+  {id:'d8',icon:'💔',name:'Infarto al Miocardio',cats:['cronicas','adultos','mayores'],
+   tags:[{t:'EMERGENCIA',c:'danger'},{t:'Cardiovascular',c:'danger'}],
+   desc:'Necrosis del músculo cardíaco por obstrucción de una arteria coronaria. Cada minuto sin tratamiento destruye más tejido cardíaco.',
+   recs:[
+     {i:'🚨',t:'<strong>LLAMAR AL 911 INMEDIATAMENTE:</strong> No esperar, no manejar solo al hospital.',c:'danger'},
+     {i:'💊',t:'<strong>Aspirina 325mg:</strong> Masticar (no tragar entera) si no hay alergia y mientras llega la ambulancia.',c:'warn'},
+     {i:'🛋️',t:'<strong>Reposo total:</strong> Sentarse o recostarse, aflojar ropa ajustada.',c:''},
+     {i:'💨',t:'<strong>Respiración tranquila:</strong> Intentar mantener calma y respirar despacio.',c:''},
+     {i:'🚫',t:'<strong>No comer ni beber nada:</strong> Puede necesitar cirugía urgente.',c:'danger'},
+     {i:'💉',t:'<strong>Prevención:</strong> Control de colesterol, presión, azúcar, peso y tabaquismo.',c:'info'},
+   ],
+   doctor:'SÍNTOMAS: Dolor opresivo en el pecho que irradia a brazo izquierdo, mandíbula o espalda + sudoración + náuseas. ES UNA EMERGENCIA.'},
+
+  {id:'d9',icon:'🦴',name:'Osteoporosis',cats:['cronicas','mayores','embarazadas'],
+   tags:[{t:'Crónica',c:'danger'},{t:'Adultos mayores',c:'warning'},{t:'Mujeres',c:'info'}],
+   desc:'Disminución de la densidad ósea que hace los huesos frágiles y propensos a fracturas. Afecta especialmente a mujeres postmenopáusicas y adultos mayores.',
+   recs:[
+     {i:'🥛',t:'<strong>Calcio y Vitamina D:</strong> Consumir lácteos, sardinas, brócoli. Suplementos si hay deficiencia.',c:''},
+     {i:'🏋️',t:'<strong>Ejercicio de impacto suave:</strong> Caminata, yoga, tai chi. Fortalece el hueso y mejora equilibrio.',c:''},
+     {i:'☀️',t:'<strong>Sol diario:</strong> 15-20 minutos de exposición solar para producir vitamina D naturalmente.',c:'info'},
+     {i:'🚭',t:'<strong>No fumar ni alcohol:</strong> Reducen la absorción de calcio y aceleran la pérdida ósea.',c:'danger'},
+     {i:'💊',t:'<strong>Bifosfonatos:</strong> Si el médico los receta, tomarlos correctamente (ayunas, posición erecta 30 min).',c:''},
+     {i:'🏠',t:'<strong>Prevenir caídas:</strong> Barras de apoyo en baño, buena iluminación, alfombras antideslizantes.',c:'warn'},
+   ],
+   doctor:'Fractura por trauma mínimo, dolor de espalda intenso y nuevo, o pérdida de altura mayor a 3 cm.'},
+
+  // ─── DIGESTIVAS ───
+  {id:'d10',icon:'🦠',name:'Helicobacter Pylori',cats:['digestivas','adultos','mayores'],
+   tags:[{t:'Infecciosa',c:'warning'},{t:'Bacteriana',c:'info'}],
+   desc:'Infección bacteriana del estómago que puede causar gastritis crónica, úlcera péptica y en casos raros, cáncer gástrico. Muy prevalente en Latinoamérica.',
+   recs:[
+     {i:'💊',t:'<strong>Triple terapia antibiótica:</strong> Amoxicilina + Claritromicina + Omeprazol por 14 días (solo con prescripción médica).',c:''},
+     {i:'✅',t:'<strong>Completar el tratamiento:</strong> No suspender aunque te sientas mejor para evitar resistencia bacteriana.',c:''},
+     {i:'🍽️',t:'<strong>Comidas pequeñas y frecuentes:</strong> 5-6 veces al día para no irritar el estómago.',c:''},
+     {i:'🚫',t:'<strong>Evitar irritantes:</strong> Café, alcohol, picante, aspirina e ibuprofeno.',c:'warn'},
+     {i:'🧼',t:'<strong>Higiene estricta:</strong> Lavado de manos antes de comer, agua potable segura.',c:'info'},
+     {i:'🔬',t:'<strong>Test de curación:</strong> Realizarse prueba de aliento o antígeno en heces 4 semanas post tratamiento.',c:''},
+   ],
+   doctor:'Dolor epigástrico intenso, vómitos con sangre, heces negras alquitranadas o pérdida de peso inexplicable.'},
+
+  {id:'d11',icon:'🤮',name:'Gastroenteritis',cats:['digestivas','comunes','ninos','adultos'],
+   tags:[{t:'Viral / Bacteriana',c:'info'},{t:'Contagiosa',c:'warning'}],
+   desc:'Inflamación del estómago e intestinos causada por virus (norovirus, rotavirus) o bacterias. Produce náuseas, vómitos, diarrea y dolor abdominal.',
+   recs:[
+     {i:'💧',t:'<strong>Suero oral:</strong> Principal tratamiento. Preparar con 1L agua + 6 cucharadas azúcar + 1 cucharadita sal.',c:''},
+     {i:'🍌',t:'<strong>Dieta BRAT:</strong> Plátano, arroz blanco, manzana cocida y tostadas cuando toleres alimentos.',c:''},
+     {i:'🛏️',t:'<strong>Reposo:</strong> Especialmente en las primeras 24 horas.',c:''},
+     {i:'🚫',t:'<strong>Evitar lácteos, grasas y jugos:</strong> Irritan más el tracto digestivo inflamado.',c:'warn'},
+     {i:'🧼',t:'<strong>Higiene extrema:</strong> Lavado de manos constante para evitar propagar la infección.',c:''},
+     {i:'💊',t:'<strong>Antieméticos/antidiarreicos:</strong> Solo bajo prescripción médica, especialmente en niños.',c:'info'},
+   ],
+   doctor:'Diarrea con sangre, vómitos por más de 24 horas sin poder retener líquidos, signos de deshidratación severa (ojos hundidos, boca seca, sin orinar).'},
+
+  {id:'d12',icon:'💩',name:'Síndrome de Intestino Irritable',cats:['digestivas','adultos'],
+   tags:[{t:'Crónica',c:'warning'},{t:'Funcional',c:'info'}],
+   desc:'Trastorno crónico del intestino grueso con dolor abdominal recurrente, distensión y cambios en el hábito intestinal (estreñimiento, diarrea o ambos).',
+   recs:[
+     {i:'📓',t:'<strong>Diario alimentario:</strong> Identificar alimentos desencadenantes (gluten, lactosa, alimentos FODMAP).',c:''},
+     {i:'🌾',t:'<strong>Fibra soluble:</strong> Avena, manzana, pera. Introducir gradualmente para evitar gases.',c:''},
+     {i:'💧',t:'<strong>Hidratación:</strong> Al menos 8 vasos de agua al día para facilitar el tránsito.',c:''},
+     {i:'🧘',t:'<strong>Manejo del estrés:</strong> El estrés es el principal desencadenante. Yoga, meditación, psicoterapia.',c:'info'},
+     {i:'🏃',t:'<strong>Ejercicio regular:</strong> Mejora la motilidad intestinal y reduce el estrés.',c:''},
+     {i:'🚫',t:'<strong>Evitar:</strong> Cafeína, alcohol, comidas grasas, picantes y grandes cantidades.',c:'warn'},
+   ],
+   doctor:'Sangre en heces, pérdida de peso sin causa, anemia, fiebre, o síntomas que despiertan por la noche.'},
+
+  // ─── RESPIRATORIAS ───
+  {id:'d13',icon:'💨',name:'Asma',cats:['respiratorias','ninos','adultos','cronicas'],
+   tags:[{t:'Crónica',c:'danger'},{t:'Alérgica / No alérgica',c:'info'}],
+   desc:'Enfermedad inflamatoria crónica de las vías respiratorias con episodios de broncoespasmo que causan sibilancias, tos, opresión torácica y dificultad para respirar.',
+   recs:[
+     {i:'💨',t:'<strong>Inhalador de rescate:</strong> Siempre llevar salbutamol (Ventolin). Usar ante el primer síntoma.',c:''},
+     {i:'🏠',t:'<strong>Control ambiental:</strong> Evitar polvo, ácaros, pelo de mascotas, humo y polen.',c:'warn'},
+     {i:'💊',t:'<strong>Corticoides inhalados:</strong> Medicación preventiva diaria aunque no haya síntomas.',c:''},
+     {i:'📊',t:'<strong>Plan de acción:</strong> Tener por escrito qué hacer según gravedad del ataque.',c:'info'},
+     {i:'🌡️',t:'<strong>Evitar desencadenantes:</strong> Infecciones respiratorias, ejercicio intenso, estrés y aire frío.',c:''},
+     {i:'🚭',t:'<strong>Ambiente libre de humo:</strong> El tabaquismo pasivo agrava el asma severamente.',c:'danger'},
+   ],
+   doctor:'Ataque que no mejora con 2 dosis de inhalador, labios o uñas azuladas, dificultad para hablar por falta de aire.'},
+
+  {id:'d14',icon:'😮',name:'EPOC (Enfermedad Pulmonar Obstructiva)',cats:['respiratorias','cronicas','mayores'],
+   tags:[{t:'Crónica progresiva',c:'danger'},{t:'Tabaco',c:'warning'}],
+   desc:'Enfermedad pulmonar progresiva causada principalmente por tabaquismo. Produce obstrucción del flujo de aire con tos crónica, expectoración y disnea progresiva.',
+   recs:[
+     {i:'🚭',t:'<strong>DEJAR DE FUMAR:</strong> Es la medida más importante. Detiene la progresión de la enfermedad.',c:'danger'},
+     {i:'💨',t:'<strong>Broncodilatadores:</strong> Inhaladores de larga duración como base del tratamiento.',c:''},
+     {i:'💉',t:'<strong>Vacunas:</strong> Gripe anual y neumococo para prevenir infecciones que agravan la EPOC.',c:'info'},
+     {i:'🏃',t:'<strong>Rehabilitación pulmonar:</strong> Programa supervisado de ejercicio y fisioterapia respiratoria.',c:''},
+     {i:'🌬️',t:'<strong>Técnica de respiración:</strong> Respiración diafragmática y con labios fruncidos.',c:''},
+     {i:'🏠',t:'<strong>Evitar contaminantes:</strong> Humo, polvo, químicos, aire muy frío o muy caliente.',c:'warn'},
+   ],
+   doctor:'Aumento brusco de disnea, cambio en color o cantidad del esputo, fiebre, o cianosis labial.'},
+
+  {id:'d15',icon:'🤧',name:'Rinitis Alérgica',cats:['respiratorias','comunes','ninos','adultos'],
+   tags:[{t:'Alérgica',c:'info'},{t:'Estacional / Perenne',c:'warning'}],
+   desc:'Inflamación de la mucosa nasal por reacción alérgica a pólenes, ácaros, pelo de animales u hongos. Produce estornudos, congestión, picor nasal y ocular.',
+   recs:[
+     {i:'💊',t:'<strong>Antihistamínicos:</strong> Cetirizina, loratadina o fexofenadina. Los de nueva generación no producen somnolencia.',c:''},
+     {i:'💧',t:'<strong>Lavado nasal con suero:</strong> Limpiar fosas nasales 2-3 veces al día reduce síntomas notablemente.',c:''},
+     {i:'🏠',t:'<strong>Control del entorno:</strong> Fundas antiácaros, limpiar sin barrer, no tener mascotas en dormitorio.',c:'warn'},
+     {i:'🌸',t:'<strong>Control del polen:</strong> Cerrar ventanas en días ventosos, usar gafas al salir, duchar al llegar a casa.',c:''},
+     {i:'💉',t:'<strong>Inmunoterapia:</strong> Vacuna de alergia que puede curar la causa a largo plazo.',c:'info'},
+     {i:'🚭',t:'<strong>Evitar humo:</strong> Agrava la inflamación de la mucosa nasal.',c:''},
+   ],
+   doctor:'Síntomas que no responden a tratamiento, sospecha de sinusitis, dificultad respiratoria nocturna o pólipos nasales.'},
+
+  // ─── NIÑOS ───
+  {id:'d16',icon:'👶',name:'Otitis Media',cats:['ninos','comunes'],
+   tags:[{t:'Infecciosa',c:'warning'},{t:'Niños',c:'info'}],
+   desc:'Infección del oído medio muy frecuente en niños. Produce dolor de oído intenso, fiebre y en ocasiones supuración. Puede ser viral o bacteriana.',
+   recs:[
+     {i:'💊',t:'<strong>Analgésicos/antipiréticos:</strong> Paracetamol o ibuprofeno para el dolor y la fiebre.',c:''},
+     {i:'🩺',t:'<strong>Consulta médica:</strong> El médico decidirá si necesita antibióticos (solo si es bacteriana).',c:''},
+     {i:'♨️',t:'<strong>Calor local:</strong> Compresas tibias sobre el oído afectado para aliviar el dolor.',c:'info'},
+     {i:'🛏️',t:'<strong>Posición semi-incorporada:</strong> Elevar ligeramente la cabecera al dormir.',c:''},
+     {i:'🤱',t:'<strong>Lactancia materna:</strong> Protege contra otitis recurrente en bebés.',c:''},
+     {i:'🚫',t:'<strong>No poner nada en el oído:</strong> No gotas sin prescripción, no algodones.',c:'warn'},
+   ],
+   doctor:'Dolor que no cede con analgésicos, fiebre alta, supuración abundante, rigidez de cuello, o niño muy decaído.'},
+
+  {id:'d17',icon:'🐛',name:'Parasitosis Intestinal',cats:['ninos','digestivas','comunes'],
+   tags:[{t:'Infecciosa',c:'warning'},{t:'Niños',c:'info'}],
+   desc:'Infección por parásitos intestinales (oxiuros, giardia, ascaris, etc.). Muy común en niños en edad escolar. Produce picor anal nocturno, dolor abdominal y diarrea.',
+   recs:[
+     {i:'💊',t:'<strong>Antiparasitarios:</strong> Mebendazol o albendazol según el parásito. Tratar a toda la familia.',c:''},
+     {i:'🧼',t:'<strong>Higiene exhaustiva:</strong> Uñas cortas, lavado de manos antes de comer y después del baño.',c:''},
+     {i:'🛏️',t:'<strong>Ropa de cama:</strong> Lavar con agua caliente diariamente durante el tratamiento.',c:'info'},
+     {i:'🥦',t:'<strong>Lavar bien los alimentos:</strong> Frutas y verduras con agua limpia y una gota de lejía alimentaria.',c:''},
+     {i:'💧',t:'<strong>Agua segura:</strong> Solo agua potable o hervida en zonas con dudas sanitarias.',c:'warn'},
+     {i:'🐾',t:'<strong>Desparasitar mascotas:</strong> Pueden ser fuente de reinfección.',c:''},
+   ],
+   doctor:'Parasitosis recurrente, pérdida de peso importante, anemia, o distensión abdominal severa.'},
+
+  {id:'d18',icon:'🔴',name:'Varicela',cats:['ninos','comunes'],
+   tags:[{t:'Viral',c:'info'},{t:'Muy contagiosa',c:'danger'},{t:'Niños',c:''}],
+   desc:'Enfermedad viral causada por el virus varicela-zóster. Produce fiebre y erupción cutánea con vesículas pruriginosas que aparecen en brotes en todo el cuerpo.',
+   recs:[
+     {i:'🛁',t:'<strong>Baños de avena coloidal:</strong> Alivian el picor significativamente. Baños frescos, no calientes.',c:''},
+     {i:'💊',t:'<strong>Antihistamínicos orales:</strong> Reducen el picor y ayudan a dormir.',c:''},
+     {i:'✋',t:'<strong>No rascar:</strong> Cortar uñas bien cortas, usar manoplas en bebés para evitar cicatrices e infección.',c:'warn'},
+     {i:'🌡️',t:'<strong>Paracetamol para fiebre:</strong> NUNCA ibuprofeno ni aspirina en varicela.',c:'danger'},
+     {i:'😷',t:'<strong>Aislamiento:</strong> Hasta que todas las lesiones formen costra (7-10 días).',c:''},
+     {i:'💉',t:'<strong>Vacunación:</strong> La vacuna previene la varicela o hace la enfermedad muy leve.',c:'info'},
+   ],
+   doctor:'Dificultad respiratoria, lesiones con pus o muy inflamadas, confusión, o rigidez de cuello.'},
+
+  // ─── ADULTOS MAYORES ───
+  {id:'d19',icon:'🧓',name:'Alzheimer / Demencia',cats:['mayores','cronicas'],
+   tags:[{t:'Neurodegenerativa',c:'danger'},{t:'Progresiva',c:'warning'}],
+   desc:'Enfermedad neurodegenerativa que deteriora progresivamente la memoria, el pensamiento y la capacidad funcional. Es la causa más común de demencia en adultos mayores.',
+   recs:[
+     {i:'🧩',t:'<strong>Estimulación cognitiva:</strong> Crucigramas, lectura, música, juegos de memoria, conversación activa.',c:''},
+     {i:'🏃',t:'<strong>Ejercicio físico:</strong> Caminata diaria. El ejercicio es el factor que más protege al cerebro.',c:''},
+     {i:'👥',t:'<strong>Socialización activa:</strong> Visitas, grupos de actividades, evitar el aislamiento.',c:'info'},
+     {i:'🛡️',t:'<strong>Seguridad en el hogar:</strong> Cerraduras de seguridad, identificación en la ropa, GPS discreto.',c:'warn'},
+     {i:'💊',t:'<strong>Medicación prescrita:</strong> Inhibidores de colinesterasa bajo estricta supervisión médica.',c:''},
+     {i:'❤️',t:'<strong>Apoyo al cuidador:</strong> El cuidador también necesita descanso y apoyo psicológico.',c:'info'},
+   ],
+   doctor:'Pérdida de memoria que interfiere con la vida diaria, desorientación en lugares conocidos, cambios de personalidad importantes.'},
+
+  {id:'d20',icon:'🦵',name:'Artritis / Artrosis',cats:['mayores','cronicas','adultos'],
+   tags:[{t:'Crónica',c:'warning'},{t:'Articular',c:'info'}],
+   desc:'Artritis: inflamación articular autoinmune (reumatoide). Artrosis: desgaste progresivo del cartílago articular (degenerativa). Ambas causan dolor, rigidez e inflamación.',
+   recs:[
+     {i:'💊',t:'<strong>Antiinflamatorios:</strong> AINEs para crisis de dolor, siempre con protector gástrico.',c:''},
+     {i:'🏊',t:'<strong>Ejercicio en agua:</strong> La natación y la hidroterapia son ideales al no cargar las articulaciones.',c:''},
+     {i:'♨️',t:'<strong>Calor y frío:</strong> Calor para rigidez matutina; frío para inflamación aguda.',c:'info'},
+     {i:'⚖️',t:'<strong>Peso saludable:</strong> Cada kilo menos reduce 4 kilos de presión sobre las rodillas.',c:''},
+     {i:'🥑',t:'<strong>Dieta antiinflamatoria:</strong> Omega-3 (pescado azul), cúrcuma, frutos rojos, aceite de oliva.',c:''},
+     {i:'🩺',t:'<strong>Fisioterapia:</strong> Fundamental para mantener rango articular y fortalecer músculos de soporte.',c:'warn'},
+   ],
+   doctor:'Inflamación articular severa, fiebre asociada al dolor articular, deformidad progresiva rápida.'},
+
+  // ─── EMBARAZADAS ───
+  {id:'d21',icon:'🤰',name:'Náuseas del Embarazo',cats:['embarazadas'],
+   tags:[{t:'Embarazo',c:'info'},{t:'1er Trimestre',c:'warning'}],
+   desc:'Las náuseas y vómitos afectan al 70-80% de las embarazadas, especialmente en el primer trimestre. La hiperémesis gravídica es la forma severa.',
+   recs:[
+     {i:'🍪',t:'<strong>Galletas saladas al despertar:</strong> Comer algo antes de levantarse de la cama.',c:''},
+     {i:'🍽️',t:'<strong>Comidas pequeñas y frecuentes:</strong> Cada 2-3 horas, evitar estómago vacío.',c:''},
+     {i:'👃',t:'<strong>Evitar alimentos con olor fuerte:</strong> Frituras, especias, comidas muy condimentadas.',c:'warn'},
+     {i:'💧',t:'<strong>Hidratación fraccionada:</strong> Pequeños sorbos frecuentes, mejor fría y con limón.',c:''},
+     {i:'🌿',t:'<strong>Jengibre:</strong> Infusión, caramelos o cápsulas de jengibre han demostrado eficacia.',c:'info'},
+     {i:'💊',t:'<strong>Vitamina B6:</strong> Piridoxina puede reducir las náuseas (consultar dosis con el médico).',c:''},
+   ],
+   doctor:'No poder retener líquidos por más de 24h, pérdida de peso >5%, orina muy oscura, o sangre en vómito.'},
+
+  {id:'d22',icon:'🩸',name:'Anemia en el Embarazo',cats:['embarazadas','adultos'],
+   tags:[{t:'Embarazo',c:'info'},{t:'Ferropénica',c:'warning'}],
+   desc:'Reducción de hemoglobina durante el embarazo, muy frecuente por las mayores necesidades de hierro del bebé y la expansión del volumen sanguíneo materno.',
+   recs:[
+     {i:'💊',t:'<strong>Suplemento de hierro:</strong> Sulfato ferroso según prescripción, generalmente 30-60mg de hierro elemental al día.',c:''},
+     {i:'🍊',t:'<strong>Vitamina C con hierro:</strong> Tomar el suplemento con jugo de naranja para triplicar la absorción.',c:'info'},
+     {i:'🥩',t:'<strong>Hierro hemo:</strong> Carne roja magra, pollo, pescado, hígado (con moderación).',c:''},
+     {i:'🌿',t:'<strong>Hierro no hemo:</strong> Lentejas, espinacas, frijoles, quinoa. Combinar con vitamina C.',c:''},
+     {i:'☕',t:'<strong>Evitar inhibidores:</strong> No tomar té, café o lácteos junto con el suplemento de hierro.',c:'warn'},
+     {i:'🔬',t:'<strong>Control analítico:</strong> Hemograma cada trimestre para monitorizar la respuesta.',c:''},
+   ],
+   doctor:'Hemoglobina menor a 7g/dL, palpitaciones, dificultad respiratoria en reposo, o síncope.'},
+
+  // ─── PIEL ───
+  {id:'d23',icon:'🩹',name:'Dermatitis / Eczema',cats:['piel','ninos','adultos','cronicas'],
+   tags:[{t:'Alérgica / Atópica',c:'info'},{t:'Crónica',c:'warning'}],
+   desc:'Inflamación de la piel que produce enrojecimiento, picor intenso y lesiones cutáneas. La dermatitis atópica es la forma más común, frecuente en niños.',
+   recs:[
+     {i:'🧴',t:'<strong>Hidratación constante:</strong> Crema emoliente rica (sin perfume) al menos 2 veces al día, especialmente tras el baño.',c:''},
+     {i:'🛁',t:'<strong>Baños cortos con agua tibia:</strong> No caliente. Usar jabón sin perfume ni colorantes.',c:''},
+     {i:'👕',t:'<strong>Ropa de algodón:</strong> Evitar lana, sintéticos y prendas ajustadas que rozan.',c:'warn'},
+     {i:'💊',t:'<strong>Corticoides tópicos:</strong> En brotes agudos, bajo prescripción médica. No usar indefinidamente.',c:''},
+     {i:'🌡️',t:'<strong>Evitar calor excesivo:</strong> El sudor agrava el picor. Ambientes frescos y ventilados.',c:''},
+     {i:'🔍',t:'<strong>Identificar desencadenantes:</strong> Jabones, detergentes, alimentos, estrés, cambios de temperatura.',c:'info'},
+   ],
+   doctor:'Infección secundaria (costras amarillas, pus), dermatitis generalizada con fiebre, o brote severo sin respuesta al tratamiento.'},
+
+  {id:'d24',icon:'☀️',name:'Quemaduras Solares',cats:['piel','comunes','ninos'],
+   tags:[{t:'Muy común',c:''},{t:'Prevención',c:'info'}],
+   desc:'Eritema (enrojecimiento) y dolor cutáneo por exposición excesiva a radiación UV solar o artificial. Aumenta el riesgo de cáncer de piel con exposiciones repetidas.',
+   recs:[
+     {i:'🧊',t:'<strong>Compresas frías:</strong> Aplicar agua fresca inmediatamente durante 15-20 minutos.',c:''},
+     {i:'💧',t:'<strong>Hidratación oral:</strong> Abundante agua para compensar pérdidas cutáneas.',c:''},
+     {i:'🧴',t:'<strong>Aloe vera o crema hidratante:</strong> Aplicar gel de aloe vera puro o crema sin perfume para calmar.',c:'info'},
+     {i:'💊',t:'<strong>Ibuprofeno oral:</strong> Reduce la inflamación y el dolor. Tomar con comida.',c:''},
+     {i:'👕',t:'<strong>Cubrir la zona:</strong> Ropa ligera de algodón hasta que sane. No reventar ampollas.',c:'warn'},
+     {i:'☀️',t:'<strong>Prevención:</strong> Protector solar SPF 50+ cada 2h, sombra entre 11-16h, gafas y sombrero.',c:''},
+   ],
+   doctor:'Ampollas extensas, fiebre alta, desorientación, vómitos, o quemadura en ojos, cara o genitales.'},
+
+  // ─── SALUD MENTAL ───
+  {id:'d25',icon:'😔',name:'Depresión',cats:['mentales','adultos','mayores'],
+   tags:[{t:'Salud Mental',c:'purple'},{t:'Tratable',c:'info'}],
+   desc:'Trastorno del estado de ánimo caracterizado por tristeza persistente, pérdida de interés, fatiga, cambios en sueño/apetito y pensamientos negativos por más de 2 semanas.',
+   recs:[
+     {i:'🩺',t:'<strong>Buscar ayuda profesional:</strong> Psiquiatra o psicólogo. La depresión es una enfermedad médica, no una debilidad.',c:''},
+     {i:'💊',t:'<strong>Antidepresivos:</strong> Requieren semanas para hacer efecto. No suspender sin indicación médica.',c:''},
+     {i:'🏃',t:'<strong>Ejercicio físico:</strong> 30 minutos de ejercicio aeróbico 3-5 veces por semana tiene efecto antidepresivo comprobado.',c:'info'},
+     {i:'👥',t:'<strong>Red de apoyo:</strong> No aislarse. Mantener contacto con familia y amigos de confianza.',c:''},
+     {i:'🌅',t:'<strong>Rutina diaria:</strong> Horarios fijos de levantarse, comer y dormir. Salir a la luz solar a diario.',c:'warn'},
+     {i:'🧠',t:'<strong>Psicoterapia:</strong> La terapia cognitivo-conductual (TCC) tiene la mayor evidencia científica.',c:''},
+   ],
+   doctor:'Pensamientos de hacerse daño o de suicidio → Llamar inmediatamente al servicio de crisis o ir a urgencias.'},
+
+  {id:'d26',icon:'😰',name:'Ansiedad / Ataques de Pánico',cats:['mentales','adultos','comunes'],
+   tags:[{t:'Salud Mental',c:'purple'},{t:'Muy común',c:'info'}],
+   desc:'Preocupación excesiva y persistente que interfiere con la vida diaria. Los ataques de pánico son episodios intensos con palpitaciones, dificultad respiratoria y miedo intenso.',
+   recs:[
+     {i:'💨',t:'<strong>Respiración 4-7-8:</strong> Inhalar 4s, retener 7s, exhalar 8s. Detiene un ataque de pánico en minutos.',c:''},
+     {i:'🧘',t:'<strong>Mindfulness:</strong> Técnica 5-4-3-2-1: nombrar 5 cosas que ves, 4 que tocas, 3 que oyes...',c:'info'},
+     {i:'🏃',t:'<strong>Ejercicio regular:</strong> Reduce la ansiedad basal de forma comparable a la medicación a largo plazo.',c:''},
+     {i:'☕',t:'<strong>Reducir cafeína:</strong> El café, té negro y bebidas energéticas agravan la ansiedad.',c:'warn'},
+     {i:'😴',t:'<strong>Sueño reparador:</strong> La privación de sueño multiplica los síntomas de ansiedad.',c:''},
+     {i:'🩺',t:'<strong>Terapia psicológica:</strong> La TCC es el tratamiento de primera línea para los trastornos de ansiedad.',c:''},
+   ],
+   doctor:'Ataques de pánico frecuentes que impiden hacer vida normal, pensamientos intrusivos obsesivos, o si la ansiedad va acompañada de depresión.'},
+
+  // ─── MÁS COMUNES ───
+  {id:'d27',icon:'🌡️',name:'Infección de Orina (ITU)',cats:['comunes','adultos','mayores','embarazadas'],
+   tags:[{t:'Bacteriana',c:'info'},{t:'Mujeres',c:'warning'}],
+   desc:'Infección bacteriana del tracto urinario, más frecuente en mujeres. Produce escozor al orinar, urgencia miccional, orina turbia/maloliente y dolor en zona baja.',
+   recs:[
+     {i:'💊',t:'<strong>Antibióticos:</strong> Fosfomicina (dosis única) o trimetoprim-sulfametoxazol 3-7 días. Solo con prescripción.',c:''},
+     {i:'💧',t:'<strong>Hidratación intensa:</strong> 2-3 litros de agua al día para "lavar" la vejiga.',c:''},
+     {i:'🍒',t:'<strong>Arándano rojo:</strong> Jugo o cápsulas pueden ayudar en la prevención de recurrencias.',c:'info'},
+     {i:'🚽',t:'<strong>Orinar frecuentemente:</strong> No retener orina. Orinar siempre después de relaciones sexuales.',c:''},
+     {i:'👕',t:'<strong>Ropa interior de algodón:</strong> Evitar tejidos sintéticos y ajustados que favorecen el crecimiento bacteriano.',c:'warn'},
+     {i:'🧼',t:'<strong>Higiene:</strong> Limpiar de delante hacia atrás. No usar jabones agresivos en la zona.',c:''},
+   ],
+   doctor:'Fiebre alta con escalofríos, dolor lumbar intenso (puede ser pielonefritis), sangre en orina, o síntomas en embarazadas.'},
+
+  {id:'d28',icon:'🤢',name:'Hepatitis A / B / C',cats:['digestivas','adultos','comunes'],
+   tags:[{t:'Viral',c:'info'},{t:'Hepática',c:'danger'}],
+   desc:'Inflamación del hígado por virus hepatotropos. La A se contagia por agua/comida contaminada. La B y C por vía sanguínea/sexual. Causan ictericia, fatiga intensa y náuseas.',
+   recs:[
+     {i:'💉',t:'<strong>Vacunación (A y B):</strong> Vacunas disponibles y altamente efectivas. Consultar el calendario vacunal.',c:''},
+     {i:'🛏️',t:'<strong>Reposo:</strong> El hígado inflamado necesita descanso para recuperarse.',c:''},
+     {i:'🚫',t:'<strong>Cero alcohol:</strong> Absolutamente prohibido con cualquier tipo de hepatitis activa.',c:'danger'},
+     {i:'💊',t:'<strong>No automedicar:</strong> El paracetamol en exceso es muy hepatotóxico. Consultar qué medicamentos son seguros.',c:'warn'},
+     {i:'🥗',t:'<strong>Dieta baja en grasas:</strong> Frutas, verduras, carbohidratos complejos. Evitar fritos y grasas saturadas.',c:''},
+     {i:'🩺',t:'<strong>Seguimiento médico:</strong> Controles de enzimas hepáticas y carga viral según el tipo.',c:'info'},
+   ],
+   doctor:'Ictericia intensa, sangrado fácil, confusión mental, abdomen muy distendido, o no poder comer/beber por náuseas.'},
+
+  {id:'d29',icon:'🔥',name:'Apendicitis',cats:['comunes','adultos','ninos'],
+   tags:[{t:'URGENCIA',c:'danger'},{t:'Quirúrgica',c:'danger'}],
+   desc:'Inflamación del apéndice vermicular. Produce dolor que comienza en el ombligo y migra a la fosa ilíaca derecha (FID). Requiere cirugía urgente para evitar perforación.',
+   recs:[
+     {i:'🚨',t:'<strong>IR A URGENCIAS DE INMEDIATO:</strong> La apendicitis es una emergencia quirúrgica.',c:'danger'},
+     {i:'🚫',t:'<strong>No tomar analgésicos fuertes:</strong> Pueden enmascarar síntomas y retrasar el diagnóstico.',c:'warn'},
+     {i:'🚫',t:'<strong>No aplicar calor local:</strong> Puede accelerar la perforación.',c:'danger'},
+     {i:'🚫',t:'<strong>No comer ni beber nada:</strong> Posible cirugía inminente.',c:'warn'},
+     {i:'📍',t:'<strong>Síntoma clave:</strong> Dolor en fosa ilíaca derecha que aumenta con la tos o al soltar la presión abdominal (Blumberg positivo).',c:'info'},
+   ],
+   doctor:'SÍNTOMAS CLAVE: Dolor periumbilical que migra a FID, fiebre, náuseas, vómito, abdomen rígido. Ir INMEDIATAMENTE a urgencias.'},
+
+  {id:'d30',icon:'🧬',name:'COVID-19',cats:['respiratorias','comunes','adultos','mayores'],
+   tags:[{t:'Viral',c:'info'},{t:'Infeccioso',c:'warning'}],
+   desc:'Enfermedad por el coronavirus SARS-CoV-2. Síntomas van desde leves (fiebre, tos, pérdida de olfato/gusto) hasta graves (neumonía, insuficiencia respiratoria).',
+   recs:[
+     {i:'🛏️',t:'<strong>Aislamiento domiciliario:</strong> Mínimo 5-7 días desde el inicio de síntomas o hasta test negativo.',c:''},
+     {i:'💧',t:'<strong>Hidratación y reposo:</strong> Pilares del tratamiento en casos leves.',c:''},
+     {i:'🌡️',t:'<strong>Monitorizar saturación:</strong> Usar oxímetro. Alerta si SpO2 < 94%.',c:'warn'},
+     {i:'💉',t:'<strong>Vacunación al día:</strong> Reduce drásticamente el riesgo de enfermedad grave y hospitalización.',c:'info'},
+     {i:'💊',t:'<strong>Antivirales:</strong> Nirmatrelvir (Paxlovid) o molnupiravir para grupos de riesgo en primeras 5 días.',c:''},
+     {i:'😷',t:'<strong>Uso de mascarilla:</strong> Al estar con otras personas del hogar para reducir contagio.',c:''},
+   ],
+   doctor:'Dificultad respiratoria, saturación < 94%, dolor torácico, confusión o cianosis. Ir a urgencias o llamar al servicio de emergencias.'},
+];
+
+// ══════════════════════════════════════
+// SECCIÓN SALUD — LÓGICA
+// ══════════════════════════════════════
+let _healthCat = 'all';
+let _healthQuery = '';
+
+function selectHealthCat(btn) {
+  document.querySelectorAll('.health-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  _healthCat = btn.dataset.cat;
+  _healthQuery = '';
+  document.getElementById('health-search').value = '';
+  renderHealthList();
+}
+
+function filterDiseases() {
+  _healthQuery = document.getElementById('health-search').value.trim().toLowerCase();
+  renderHealthList();
+}
+
+function renderHealthList() {
+  let list = DISEASES;
+  if (_healthQuery) {
+    list = list.filter(d =>
+      d.name.toLowerCase().includes(_healthQuery) ||
+      d.desc.toLowerCase().includes(_healthQuery) ||
+      d.tags.some(t => t.t.toLowerCase().includes(_healthQuery))
+    );
+  } else if (_healthCat !== 'all') {
+    list = list.filter(d => d.cats.includes(_healthCat));
+  }
+
+  const container = document.getElementById('health-list');
+  if (!list.length) {
+    container.innerHTML = `<div class="health-empty">
+      <div class="big-icon">🔍</div>
+      <h3>Sin resultados</h3>
+      <p>Intenta con otro término o categoría.</p>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = list.map(d => `
+    <div class="disease-card" id="dc-${d.id}" onclick="toggleDisease('${d.id}')">
+      <div class="disease-card-header">
+        <div class="disease-icon-wrap">${d.icon}</div>
+        <div class="disease-info">
+          <div class="disease-name">${d.name}</div>
+          <div class="disease-tags">
+            ${d.tags.map(t => `<span class="disease-tag ${t.c}">${t.t}</span>`).join('')}
+          </div>
+        </div>
+        <span class="disease-chevron">›</span>
+      </div>
+      <div class="disease-body">
+        <div class="disease-section">
+          <div class="disease-section-title">📋 ¿Qué es?</div>
+          <div class="disease-desc">${d.desc}</div>
+        </div>
+        <div class="disease-section">
+          <div class="disease-section-title">✅ Recomendaciones</div>
+          <div class="rec-list">
+            ${d.recs.map(r => `
+              <div class="rec-item ${r.c}">
+                <span class="rec-icon">${r.i}</span>
+                <div class="rec-text">${r.t}</div>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div class="when-doctor">
+          <span class="when-doctor-icon">🚨</span>
+          <div class="when-doctor-text">
+            <strong>¿Cuándo ir al médico?</strong>
+            ${d.doctor}
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleDisease(id) {
+  const card = document.getElementById('dc-' + id);
+  card.classList.toggle('open');
+}
+
+// ══════════════════════════════════════
+// SECCIÓN CITAS MÉDICAS
+// ══════════════════════════════════════
+const APPT_ICONS = {
+  purple:'💜', blue:'💙', green:'💚',
+  red:'❤️', orange:'🧡', teal:'🩵', yellow:'💛'
+};
+const APPT_COLORS = {
+  purple:'var(--purple-soft)', blue:'var(--primary-soft)',
+  green:'var(--green-soft)', red:'var(--accent-soft)',
+  orange:'var(--orange-soft)', teal:'var(--teal-soft)',
+  yellow:'var(--yellow-soft)'
+};
+
+let _apptFilter = 'todas';
+let _editApptId = null;
+let _selApptColor = 'purple';
+
+function getAppts() {
+  const p = curP(); if (!p) return [];
+  return p.appointments || [];
+}
+function saveAppts(list) {
+  const p = curP(); if (!p) return;
+  p.appointments = list;
+  saveProfiles();
+}
+
+// ── RENDER PRINCIPAL ──
+function renderAppointments() {
+  renderApptStats();
+  renderApptBanner();
+  renderApptList();
+}
+
+function renderApptStats() {
+  const appts = getAppts();
+  const total = appts.length;
+  const completadas = appts.filter(a => a.status === 'completada').length;
+  const pendientes = appts.filter(a => a.status === 'pendiente').length;
+  document.getElementById('as-total').textContent = total;
+  document.getElementById('as-completadas').textContent = completadas;
+  document.getElementById('as-pendientes').textContent = pendientes;
+}
+
+function renderApptBanner() {
+  const banner = document.getElementById('appt-banner');
+  const now = new Date();
+  const upcoming = getAppts()
+    .filter(a => a.status === 'pendiente')
+    .map(a => ({ ...a, dt: new Date(a.date + 'T' + (a.time || '00:00')) }))
+    .filter(a => a.dt >= now)
+    .sort((x, y) => x.dt - y.dt)[0];
+
+  if (!upcoming) { banner.innerHTML = ''; return; }
+
+  const msLeft = upcoming.dt - now;
+  const minutesLeft = Math.floor(msLeft / (1000 * 60));
+  const hoursLeft = Math.floor(msLeft / (1000 * 60 * 60));
+  const daysLeft = Math.floor(msLeft / (1000 * 60 * 60 * 24));
+
+  let diffText = '';
+  if (minutesLeft < 60) {
+    diffText = '⚡ En ' + minutesLeft + ' minutos!';
+  } else if (hoursLeft < 24) {
+    diffText = '⏰ Hoy en ' + hoursLeft + ' hora' + (hoursLeft > 1 ? 's' : '');
+  } else if (daysLeft === 1) {
+    diffText = '📆 Mañana';
+  } else {
+    diffText = '📅 En ' + daysLeft + ' días';
+  }
+
+  banner.innerHTML = `
+    <div class="appt-upcoming-banner">
+      <span class="appt-upcoming-icon">📅</span>
+      <div class="appt-upcoming-text">
+        <strong>Próxima cita: ${diffText}</strong>
+        <span>${upcoming.doctor} · ${upcoming.specialty || ''} · ${formatApptDate(upcoming.date)} ${upcoming.time || ''}</span>
+      </div>
+    </div>`;
+}
+
+function renderApptList() {
+  const container = document.getElementById('appt-list');
+  const now = new Date();
+  let appts = getAppts();
+
+  if (_apptFilter === 'pendiente') {
+    appts = appts.filter(a => a.status === 'pendiente');
+  } else if (_apptFilter === 'completada') {
+    appts = appts.filter(a => a.status === 'completada');
+  } else if (_apptFilter === 'cancelada') {
+    appts = appts.filter(a => a.status === 'cancelada');
+  } else if (_apptFilter === 'proximas') {
+    const in7 = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    appts = appts.filter(a => {
+      const dt = new Date(a.date + 'T' + (a.time || '00:00'));
+      return dt >= now && dt <= in7 && a.status === 'pendiente';
+    });
+  }
+
+  // Ordenar: pendientes primero por fecha, luego completadas/canceladas
+  appts.sort((a, b) => {
+    const da = new Date(a.date + 'T' + (a.time || '00:00'));
+    const db = new Date(b.date + 'T' + (b.time || '00:00'));
+    if (a.status === 'pendiente' && b.status !== 'pendiente') return -1;
+    if (a.status !== 'pendiente' && b.status === 'pendiente') return 1;
+    return da - db;
+  });
+
+  if (!appts.length) {
+    container.innerHTML = `
+      <div class="appt-empty">
+        <div class="big-icon">📅</div>
+        <h3>${_apptFilter === 'proximas' ? 'Sin citas en los próximos 7 días' : 'Sin citas registradas'}</h3>
+        <p>Toca <strong>+</strong> para agendar tu primera cita médica.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = appts.map(a => {
+    const dt = new Date(a.date + 'T' + (a.time || '00:00'));
+    const isPast = dt < now && a.status === 'pendiente';
+    const diffDays = Math.ceil((dt - now) / (1000 * 60 * 60 * 24));
+    const urgency = a.status === 'pendiente' && diffDays >= 0 && diffDays <= 1 ? '🔴' :
+                    a.status === 'pendiente' && diffDays <= 3 ? '🟡' : '';
+
+    return `
+    <div class="appt-card status-${a.status}" id="ac-${a.id}">
+      <div class="appt-card-inner" onclick="toggleApptCard('${a.id}')">
+        <div class="appt-icon-wrap" style="background:${APPT_COLORS[a.color] || APPT_COLORS.purple}">
+          ${APPT_ICONS[a.color] || '💜'}
+        </div>
+        <div class="appt-info">
+          <div class="appt-doctor">${urgency} ${a.doctor}</div>
+          <div class="appt-specialty">${a.specialty || 'Medicina General'}</div>
+          <div class="appt-datetime">
+            <span class="appt-date-chip">📅 ${formatApptDate(a.date)}</span>
+            ${a.time ? `<span class="appt-date-chip">⏰ ${a.time}</span>` : ''}
+            <span class="appt-status-badge badge-${a.status}">
+              ${a.status === 'pendiente' ? '🟣 Pendiente' :
+                a.status === 'completada' ? '✅ Completada' : '❌ Cancelada'}
+            </span>
+          </div>
+        </div>
+        <span class="appt-chevron">›</span>
+      </div>
+      <div class="appt-body">
+        ${a.place ? `
+        <div class="appt-detail-row">
+          <span class="appt-detail-icon">🏥</span>
+          <div class="appt-detail-text">
+            <div class="appt-detail-label">Centro médico</div>
+            <div class="appt-detail-value">${a.place}</div>
+          </div>
+        </div>` : ''}
+        ${a.notes ? `
+        <div class="appt-detail-row">
+          <span class="appt-detail-icon">📝</span>
+          <div class="appt-detail-text">
+            <div class="appt-detail-label">Motivo / Notas</div>
+            <div class="appt-detail-value">${a.notes}</div>
+          </div>
+        </div>` : ''}
+        ${a.cost ? `
+        <div class="appt-detail-row">
+          <span class="appt-detail-icon">💰</span>
+          <div class="appt-detail-text">
+            <div class="appt-detail-label">Costo estimado</div>
+            <div class="appt-detail-value">${a.cost}</div>
+          </div>
+        </div>` : ''}
+        ${a.phone ? `
+        <div class="appt-detail-row" onclick="window.open('tel:${a.phone}')" style="cursor:pointer">
+          <span class="appt-detail-icon">📞</span>
+          <div class="appt-detail-text">
+            <div class="appt-detail-label">Teléfono consultorio</div>
+            <div class="appt-detail-value" style="color:var(--primary)">${a.phone}</div>
+          </div>
+        </div>` : ''}
+        ${isPast ? `
+        <div style="background:var(--orange-soft);border-radius:11px;padding:9px 12px;
+          margin-top:8px;font-size:12px;font-weight:700;color:var(--orange);display:flex;gap:8px">
+          <span>⚠️</span><span>Esta cita ya pasó sin confirmarse como completada.</span>
+        </div>` : ''}
+        <div class="appt-actions">
+          ${a.status === 'pendiente' ? `
+            <button class="appt-action-btn btn-completar" onclick="changeApptStatus('${a.id}','completada')">✅ Completada</button>
+            <button class="appt-action-btn btn-cancelar" onclick="changeApptStatus('${a.id}','cancelada')">❌ Cancelar</button>` : `
+            <button class="appt-action-btn btn-completar" onclick="changeApptStatus('${a.id}','pendiente')">↩️ Restaurar</button>`}
+          <button class="appt-action-btn btn-editar" onclick="editAppt('${a.id}')">✏️ Editar</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleApptCard(id) {
+  document.getElementById('ac-' + id).classList.toggle('open');
+}
+
+function changeApptStatus(id, status) {
+  const appts = getAppts();
+  const idx = appts.findIndex(a => a.id === id);
+  if (idx < 0) return;
+  appts[idx].status = status;
+  appts[idx].statusTs = new Date().toISOString();
+  saveAppts(appts);
+  renderAppointments();
+  const msg = status === 'completada' ? '✅ Cita marcada como completada' :
+              status === 'cancelada' ? '❌ Cita cancelada' : '↩️ Cita restaurada';
+  showToast(msg, status === 'completada' ? 'tg' : '');
+}
+
+function selectApptFilter(btn) {
+  document.querySelectorAll('.appt-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  _apptFilter = btn.dataset.filter;
+  renderApptList();
+}
+
+// ── FORMULARIO ──
+function openAddAppt() {
+  _editApptId = null;
+  _selApptColor = 'purple';
+  document.getElementById('modal-appt-title').textContent = '📅 Nueva Cita';
+  document.getElementById('appt-doctor').value = '';
+  document.getElementById('appt-specialty').value = '';
+  document.getElementById('appt-place').value = '';
+  document.getElementById('appt-notes').value = '';
+  document.getElementById('appt-cost').value = '';
+  document.getElementById('appt-phone').value = '';
+  // Fecha de hoy por defecto
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('appt-date').value = today;
+  document.getElementById('appt-time').value = '09:00';
+  document.getElementById('del-appt-btn').style.display = 'none';
+  document.querySelectorAll('#appt-color-pick .color-dot')
+    .forEach(d => d.classList.toggle('selected', d.dataset.color === 'purple'));
+  openModal('modal-appt');
+}
+
+function editAppt(id) {
+  const appts = getAppts();
+  const a = appts.find(x => x.id === id);
+  if (!a) return;
+  _editApptId = id;
+  _selApptColor = a.color || 'purple';
+  document.getElementById('modal-appt-title').textContent = '✏️ Editar Cita';
+  document.getElementById('appt-doctor').value = a.doctor || '';
+  document.getElementById('appt-specialty').value = a.specialty || '';
+  document.getElementById('appt-place').value = a.place || '';
+  document.getElementById('appt-notes').value = a.notes || '';
+  document.getElementById('appt-cost').value = a.cost || '';
+  document.getElementById('appt-phone').value = a.phone || '';
+  document.getElementById('appt-date').value = a.date || '';
+  document.getElementById('appt-time').value = a.time || '';
+  document.getElementById('del-appt-btn').style.display = 'block';
+  document.querySelectorAll('#appt-color-pick .color-dot')
+    .forEach(d => d.classList.toggle('selected', d.dataset.color === _selApptColor));
+  closeModal('modal-appt');
+  openModal('modal-appt');
+}
+
+function selectApptColor(el) {
+  document.querySelectorAll('#appt-color-pick .color-dot')
+    .forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  _selApptColor = el.dataset.color;
+}
+
+function saveAppt() {
+  const doctor = document.getElementById('appt-doctor').value.trim();
+  const date = document.getElementById('appt-date').value;
+  if (!doctor) { showToast('⚠️ Escribe el nombre del doctor', 'tr'); return; }
+  if (!date) { showToast('⚠️ Selecciona la fecha', 'tr'); return; }
+
+  const appts = getAppts();
+  const appt = {
+    id: _editApptId || Date.now().toString(),
+    doctor,
+    specialty: document.getElementById('appt-specialty').value,
+    place: document.getElementById('appt-place').value.trim(),
+    date,
+    time: document.getElementById('appt-time').value,
+    cost: document.getElementById('appt-cost').value.trim(),
+    notes: document.getElementById('appt-notes').value.trim(),
+    phone: document.getElementById('appt-phone').value.trim(),
+    color: _selApptColor,
+    status: _editApptId ? (appts.find(a => a.id === _editApptId)?.status || 'pendiente') : 'pendiente',
+    createdAt: _editApptId ? (appts.find(a => a.id === _editApptId)?.createdAt || new Date().toISOString()) : new Date().toISOString()
+  };
+
+  if (_editApptId) {
+    const idx = appts.findIndex(a => a.id === _editApptId);
+    appts[idx] = appt;
+  } else {
+    appts.push(appt);
+  }
+
+  saveAppts(appts);
+  closeModal('modal-appt');
+  renderAppointments();
+  showToast('✅ Cita guardada correctamente', 'tg');
+  registerApptAlarms();
+}
+
+function deleteAppt() {
+  if (!confirm('¿Eliminar esta cita?')) return;
+  const appts = getAppts().filter(a => a.id !== _editApptId);
+  saveAppts(appts);
+  closeModal('modal-appt');
+  renderAppointments();
+  showToast('🗑️ Cita eliminada', '');
+}
+
+// ── ALARMAS DE CITAS ──
+let _apptAlarmTimers = [];
+function registerApptAlarms() {
+  _apptAlarmTimers.forEach(t => clearTimeout(t));
+  _apptAlarmTimers = [];
+  if (!settings.notif) return;
+  const now = new Date();
+  getAppts().filter(a => a.status === 'pendiente').forEach(a => {
+    const dt = new Date(a.date + 'T' + (a.time || '09:00'));
+    // Alarma 1 día antes
+    const dayBefore = new Date(dt.getTime() - 24 * 60 * 60 * 1000);
+    const ms1 = dayBefore - now;
+    if (ms1 > 0 && ms1 < 7 * 24 * 60 * 60 * 1000) {
+      _apptAlarmTimers.push(setTimeout(() => {
+        sendNotif('📅 Cita mañana', 'Cita con ' + a.doctor + ' mañana a las ' + (a.time || ''));
+        showToast('📅 Recordatorio: cita mañana con ' + a.doctor, 'tg');
+      }, ms1));
+    }
+    // Alarma 1 hora antes
+    const hourBefore = new Date(dt.getTime() - 60 * 60 * 1000);
+    const ms2 = hourBefore - now;
+    if (ms2 > 0 && ms2 < 24 * 60 * 60 * 1000) {
+      _apptAlarmTimers.push(setTimeout(() => {
+        sendNotif('📅 Cita en 1 hora', 'Cita con ' + a.doctor + ' en 1 hora (' + (a.time || '') + ')');
+        showToast('🔔 Cita en 1 hora: ' + a.doctor, 'tg');
+        playSound();
+      }, ms2));
+    }
+  });
+}
+
+// ── UTILIDADES ──
+function formatApptDate(dateStr) {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 }
 </script>
 </body>
