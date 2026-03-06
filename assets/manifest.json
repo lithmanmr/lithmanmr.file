@@ -1,9 +1,8 @@
 {
   "name": "MisPastillas",
   "short_name": "MisPastillas",
-  "description": "Cuidando tu salud cada día",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "https://lithmanmr.github.io/lithmanmr.file/",
+  "scope": "https://lithmanmr.github.io/lithmanmr.file/",
   "display": "standalone",
   "background_color": "#1a5276",
   "theme_color": "#1a5276",
