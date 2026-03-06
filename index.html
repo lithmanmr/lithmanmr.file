@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="assets/logo_pastilla.png">
 
 <!-- Manifest para instalar como app -->
-<link rel="manifest" href="assets/manifest.json">
+<link rel="manifest" href="assets/manifest.json" crossorigin="use-credentials">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MisPastillas">
@@ -1661,12 +1661,8 @@ function playSound(){
 }
 
 // ── SERVICE WORKER ──
-if('serviceWorker'in navigator){
-  const sw=`self.addEventListener('install',e=>self.skipWaiting());
-self.addEventListener('activate',e=>clients.claim());
-self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>new Response(''))));});`;
-  const blob=new Blob([sw],{type:'application/javascript'});
-  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
 }
 
 // ══════════════════════════════════════
